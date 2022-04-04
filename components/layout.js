@@ -14,6 +14,7 @@ export default function Layout({ children }) {
       <div className="flex min-h-screen font-sans text-white overflow-hidden">
         <div className="z-10 bg-scroll bg-image flex flex-row grow m-2 bg-neutral-900/70">
           <div className="absolute z-5 bg-neutral-900/90 w-full h-full"></div>
+          {children}
           <Sidebar>
             <Avatar />
             <TechStack data={data.techstack} />
