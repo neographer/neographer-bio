@@ -22,7 +22,3 @@ a {
 .rounded-full {
   border-radius: 9999px;
 }
-
-.bg-image {
-  background-image: url("../public/images/bg.jpeg");
-}

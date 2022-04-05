@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="from-neutral-600/20 to-gray-600/50 bg-gradient-to-tr mx-5 mt-auto">
-      <div className="flex flex-row w-full">
+    <footer className="from-neutral-800/95 to-gray-800/95 bg-gradient-to-l ml-2 mt-auto">
+      <div className="flex flex-col md:flex-row w-full">
         <div className="justify-start grow m-2">
           <p className="text-xs font-thin opacity-30 text-white">Designed & Developed by Neographer.</p>
         </div>
