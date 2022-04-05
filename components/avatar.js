@@ -8,7 +8,7 @@ export default function Avatar() {
         <div className="flex justify-center mt-5">
           <Image src={profilePic} alt="Picture of Owner" className="rounded-full" width={100} height={100} objectFit="cover" />
         </div>
-        <h1 className="flex justify-center text-xl mt-3">{data.name}</h1>
+        <h1 className="flex justify-center text-lg mt-3">{data.name}</h1>
         {!!data.taglines ? (
           data.taglines.map((tagline, index) => (
             <h1 key={index} className="flex justify-center text-xs opacity-60">

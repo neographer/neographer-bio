@@ -3,13 +3,13 @@ import { SiNestjs, SiSpringboot, SiTypescript } from "react-icons/si";
 
 export default function Techicons({ items }) {
   const techiconlist = {
-    java: <FaJava className="fill-green-500 m-1 w-7 h-7" />,
-    javascript: <FaJs className="fill-green-500 m-1 w-7 h-7" />,
-    typescript: <SiTypescript className="fill-green-500 m-1 w-7 h-7" />,
-    "spring boot": <SiSpringboot className="fill-green-500 m-1 w-7 h-7" />,
-    nestjs: <SiNestjs className="fill-green-500 m-1 w-7 h-7" />,
-    vuejs: <FaVuejs className="fill-green-500 m-1 w-7 h-7" />,
-    reactjs: <FaReact className="fill-green-500 m-1 w-7 h-7" />,
+    java: <FaJava className="fill-green-500 m-1 w-5 h-5" />,
+    javascript: <FaJs className="fill-green-500 m-1 w-5 h-5" />,
+    typescript: <SiTypescript className="fill-green-500 m-1 w-5 h-5" />,
+    "spring boot": <SiSpringboot className="fill-green-500 m-1 w-5 h-5" />,
+    nestjs: <SiNestjs className="fill-green-500 m-1 w-5 h-5" />,
+    vuejs: <FaVuejs className="fill-green-500 m-1 w-5 h-5" />,
+    reactjs: <FaReact className="fill-green-500 m-1 w-5 h-5" />,
   };
   return (
     <>
