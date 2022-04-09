@@ -1,16 +1,16 @@
 {
   "name": "Anoop Kumar",
-  "taglines": ["Technical Architect", "Fullstack Developer"],
+  "taglines": ["Fullstack Web Developer"],
   "sections": [
     {
       "name": "experience",
       "data": [
-        { "name": "Integer Software Solutions", "location": "Bangalore", "start": "2005", "end": "2006" },
-        { "name": "Ekomate", "location": "Bangalore", "start": "2006", "end": "2007" },
-        { "name": "IBM", "location": "Bangalore", "start": "2007", "end": "2010" },
-        { "name": "Arbitron", "location": "Kochi", "start": "2010", "end": "2014" },
+        { "name": "Simelabs", "location": "Kochi", "start": "2020", "end": "2022" },
         { "name": "TCS", "location": "Kochi", "start": "2014", "end": "2020" },
-        { "name": "Simelabs", "location": "Kochi", "start": "2020", "end": "2022" }
+        { "name": "Arbitron", "location": "Kochi", "start": "2010", "end": "2014" },
+        { "name": "IBM", "location": "Bangalore", "start": "2007", "end": "2010" },
+        { "name": "Ekomate", "location": "Bangalore", "start": "2006", "end": "2007" },
+        { "name": "Integer Software Solutions", "location": "Bangalore", "start": "2005", "end": "2006" }
       ]
     },
     {
