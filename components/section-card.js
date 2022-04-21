@@ -2,7 +2,7 @@ export default function SectionCard({ section }) {
   return (
     <div className="flex flex-col">
       <h1 className="text-lg uppercase tracking-widest border-b-2 m-2 text-lightred/80">{section.name}</h1>
-      <div className="grid lg:grid-flow-row grid-cols-1 lg:grid-cols-3 xl:grid-cols-2 lg:gap-1 xl:gap-2">
+      <div className="grid lg:grid-flow-row grid-cols-1 lg:grid-cols-3 lg:gap-1">
         {section.data.map((item, index) => (
           <div key={index} className="shadow-lg m-2 p-2 hover:bg-lightred/5">
             <h1 className="font-bold text-lightred/50 mx-1">{item.position}</h1>
