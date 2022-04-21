@@ -1,23 +1,131 @@
 {
   "name": "Anoop Kumar",
-  "taglines": ["Fullstack Web Developer"],
+  "taglines": [
+    "Fullstack Web Developer"
+  ],
+  "shortdesc": "Agile oriented professional with 17+ years of technical management and development experience in Java technology.",
   "sections": [
     {
       "name": "experience",
       "data": [
-        { "name": "Simelabs", "location": "Kochi", "start": "2020", "end": "2022" },
-        { "name": "TCS", "location": "Kochi", "start": "2014", "end": "2020" },
-        { "name": "Arbitron", "location": "Kochi", "start": "2010", "end": "2014" },
-        { "name": "IBM", "location": "Bangalore", "start": "2007", "end": "2010" },
-        { "name": "Ekomate", "location": "Bangalore", "start": "2006", "end": "2007" },
-        { "name": "Integer Software Solutions", "location": "Bangalore", "start": "2005", "end": "2006" }
+        {
+          "name": "Simelabs",
+          "position": "Technical Architect",
+          "location": "Kochi",
+          "start": "2020",
+          "end": "2022"
+        },
+        {
+          "name": "TCS",
+          "position": "Assistant Consultant",
+          "location": "Kochi",
+          "start": "2014",
+          "end": "2020",
+          "desc": [
+            "Technically managed and developed back-end rest services for IHG using the Agile approach. (2019-2020)",
+            "Agile development of hybrid mobile applications integrating WIDEN and Office 365 API for GE Healthcare. (2016-2018)",
+            "Developed proof of concept using Python and ELK stack for calculating IPTE metrics for GE Healthcare. (2018)",
+            "Managed, maintained and supported Nielsen Audio applications with team size of 10. (2014-2015)"
+          ]
+        },
+        {
+          "name": "Arbitron",
+          "position": "Specialist",
+          "location": "Kochi",
+          "start": "2010",
+          "end": "2014",
+          "desc": [
+            "Developed and maintained different products for Arbitron, majorly in Tapscan.",
+            "Designed, developed and deployed Multiselect Component using JSF and EJS Treegrid (Coqsoft)."
+          ]
+        },
+        {
+          "name": "IBM",
+          "position": "Application Programmer",
+          "location": "Bangalore",
+          "start": "2007",
+          "end": "2010",
+          "desc": [
+            "Involved in the development and maintenance of different products for clients Sprint & CenturyLink (formerly Embarq)",
+            "Involved in the development of point-of-sale applications using Oracle 360 tour framework."
+          ]
+        },
+        {
+          "name": "Ekomate",
+          "position": "Software Programmer",
+          "location": "Bangalore",
+          "start": "2006",
+          "end": "2007",
+          "desc": [
+            "Involved in the development of an insurance product for 3rd party insurance companies (DSRM).",
+            "Technically managed a team of size 3 and mentored them in the technology stack."
+          ]
+        },
+        {
+          "name": "Integer Software Solutions",
+          "position": "Software Trainee",
+          "location": "Bangalore",
+          "start": "2005",
+          "end": "2006"
+        }
       ]
     },
     {
       "name": "education",
       "data": [
-        { "name": "STAS", "location": "Kottayam, Kerala", "start": "2002", "end": "2005" },
-        { "name": "NSS College", "location": "Idukki, Kerala", "start": "1998", "end": "2001" }
+        {
+          "name": "STAS",
+          "course": "Masters in Computer Application",
+          "location": "Kottayam, Kerala",
+          "start": "2002",
+          "end": "2005"
+        },
+        {
+          "name": "NSS College",
+          "course": "Bachelors in Computer Application",
+          "location": "Idukki, Kerala",
+          "start": "1998",
+          "end": "2001"
+        }
+      ]
+    },
+    {
+      "name": "achievments",
+      "data": [
+        {
+          "name": "On the Spot Award (2017)",
+          "desc": [
+            "From TCS - GE relationship for working on Proof of Concept that involves integration of Office 365 document API's with hybrid mobile application."
+          ]
+        },
+        {
+          "name": "Emerging Star Award (2014)",
+          "desc": [
+            "From TCS – Nielsen Relationship for building and mentoring Service Delivery team within short time."
+          ]
+        },
+        {
+          "name": "Award from IBM@Sprint (2008)",
+          "desc": [
+            "For outstanding contributions to service delivery and demonstrating subject matter"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "volunteer experiance",
+      "data": [
+        {
+          "name": "Anbodu Kochi",
+          "position": "Volunteer",
+          "location": "Kochi, Kerala",
+          "start": "2015",
+          "end": "Present",
+          "desc": [
+            "Anbodu Kochi - came into being, while offering a helping hand for our friends in Chennai during the severe floods of Dec 2015.",
+            "It also actively helped during the floods of 2018 in Kochi."
+          ]
+        }
       ]
     }
   ],
@@ -36,7 +144,22 @@
     }
   ],
   "techstack": [
-    { "type": "programming languages", "items": ["java", "javascript", "typescript"] },
-    { "type": "frameworks", "items": ["spring boot", "nestjs", "vuejs", "reactjs"] }
+    {
+      "type": "programming languages",
+      "items": [
+        "java",
+        "javascript",
+        "typescript"
+      ]
+    },
+    {
+      "type": "frameworks",
+      "items": [
+        "spring boot",
+        "nestjs",
+        "vuejs",
+        "reactjs"
+      ]
+    }
   ]
 }

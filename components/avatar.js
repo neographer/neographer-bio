@@ -18,6 +18,7 @@ export default function Avatar() {
         ) : (
           <h1 className="flex justify-center text-red-400">{"<Set taglines>"}</h1>
         )}
+        <p className="flex justify-center text-center font-extralight opacity-60 mt-2 m-5">{data.shortdesc}</p>
       </div>
     </>
   );
