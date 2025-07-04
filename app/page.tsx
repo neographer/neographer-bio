@@ -6,6 +6,7 @@ import { Skills } from '@/components/skills'
 import { Achievements } from '@/components/achievements'
 import { Volunteer } from '@/components/volunteer'
 import { Contact } from '@/components/contact'
+import Footer from '@/components/footer'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LoadingSpinner } from '@/components/loading-spinner'
 
@@ -48,6 +49,10 @@ export default function HomePage() {
         
         <Suspense fallback={<LoadingSpinner />}>
           <Contact />
+        </Suspense>
+        
+        <Suspense fallback={<LoadingSpinner />}>
+          <Footer />
         </Suspense>
       </div>
     </main>
