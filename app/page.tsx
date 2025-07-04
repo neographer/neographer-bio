@@ -4,6 +4,7 @@ import { About } from '@/components/about'
 import { Experience } from '@/components/experience'
 import { Skills } from '@/components/skills'
 import { Achievements } from '@/components/achievements'
+import { Volunteer } from '@/components/volunteer'
 import { Contact } from '@/components/contact'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LoadingSpinner } from '@/components/loading-spinner'
@@ -39,6 +40,10 @@ export default function HomePage() {
         
         <Suspense fallback={<LoadingSpinner />}>
           <Achievements />
+        </Suspense>
+        
+        <Suspense fallback={<LoadingSpinner />}>
+          <Volunteer />
         </Suspense>
         
         <Suspense fallback={<LoadingSpinner />}>
