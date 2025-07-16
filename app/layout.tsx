@@ -7,22 +7,22 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Anoop Kumar - Fullstack Developer',
-  description: 'Agile oriented professional with 17+ years of technical management and development experience in Java technology.',
+  description: 'Agile oriented professional with 20+ years of technical management and development experience in Java technology.',
   keywords: ['Fullstack Developer', 'Java', 'React', 'Next.js', 'Technical Architect'],
   authors: [{ name: 'Anoop Kumar' }],
   creator: 'Anoop Kumar',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://neographer.dev',
+    url: 'https://neographer.co.in/',
     title: 'Anoop Kumar - Fullstack Developer',
-    description: 'Agile oriented professional with 17+ years of technical management and development experience in Java technology.',
+    description: 'Agile oriented professional with 20+ years of technical management and development experience in Java technology.',
     siteName: 'Anoop Kumar Portfolio',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Anoop Kumar - Fullstack Developer',
-    description: 'Agile oriented professional with 17+ years of technical management and development experience in Java technology.',
+    description: 'Agile oriented professional with 20+ years of technical management and development experience in Java technology.',
     creator: '@neographr_kochi',
   },
   robots: {
