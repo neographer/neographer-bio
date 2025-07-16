@@ -3,7 +3,8 @@
   "taglines": [
     "Fullstack Web Developer"
   ],
-  "shortdesc": "Agile oriented professional with 19+ years of technical management and development experience in Java technology.",
+  "shortdesc": "Agile oriented professional with {{experience}} of technical management and development experience in Java technology.",
+  "careerStartYear": 2005,
   "sections": [
     {
       "name": "experience",
@@ -13,7 +14,7 @@
           "position": "Technical Architect",
           "location": "Kochi",
           "start": "2020",
-          "end": "2022"
+          "current": true
         },
         {
           "name": "TCS",
