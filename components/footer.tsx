@@ -60,12 +60,12 @@ export default function Footer() {
             <div className="flex items-center space-x-2 text-sm">
               <span className="text-muted-foreground">Vibe coded with</span>
               <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-primary font-medium">Cursor</span>
+              <span className="text-primary font-medium">Antigravity</span>
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="text-primary hover:text-primary/80 underline underline-offset-2 transition-colors"
               >
-                See How
+                AI Journey
               </button>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default function Footer() {
               <div className="flex justify-between items-start mb-6">
                 <div className="flex items-center space-x-2">
                   <Sparkles className="h-6 w-6 text-primary" />
-                  <h2 className="text-2xl font-bold">Modernization Journey</h2>
+                  <h2 className="text-2xl font-bold">AI Collaborative Journey</h2>
                 </div>
                 <button
                   onClick={() => setIsModalOpen(false)}
@@ -105,7 +105,7 @@ export default function Footer() {
 
               <div className="space-y-6">
                 <p className="text-muted-foreground leading-relaxed">
-                  This bio page was completely modernized using Cursor AI, transforming it from a basic Next.js 12 site to a cutting-edge Next.js 14 application with modern UI/UX patterns.
+                  This bio page represents a seamless collaboration between human intent and AI capability. Originally modernized with Cursor AI, it continues to evolve with Antigravity, transforming from a basic Next.js 12 site to a cutting-edge Next.js 14 application.
                 </p>
 
                 {modernizationChanges.map((section, index) => (
@@ -134,7 +134,7 @@ export default function Footer() {
 
                 <div className="pt-4 border-t border-border">
                   <p className="text-sm text-muted-foreground text-center">
-                    Built with ❤️ using Cursor AI for intelligent code generation and modern development practices.
+                    Built with ❤️ using AI assistants for intelligent code generation and modern development practices.
                   </p>
                 </div>
               </div>

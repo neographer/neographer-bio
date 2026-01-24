@@ -14,7 +14,14 @@
           "position": "Technical Architect",
           "location": "Kochi",
           "start": "2020",
-          "current": true
+          "current": true,
+          "desc": [
+            "Demo Center / Cloud Software Group (Jun 2025 – Oct 2025): Solution Architect - Involved in resolving production issues, implementing enhancements, and architectural decisions for application redesign.",
+            "Share Your Fortune (Apr 2025 – May 2025): Frontend Developer - Revamped the NGOs website, involved in implementation of new designs, responsiveness, mentoring and reviewing the team's work.",
+            "West Pharmaceutical Services / WHP (Jan 2021 – Mar 2025): Technical Architect - Deployed Project EKA using Spring Boot & Azure Health Data Services. Developed WHP API (NestJS), dashboard admin (VueJS), and internal software bill of material app (React, NodeJS).",
+            "NFC Services (Jul 2021 – Dec 2021): Solution Architect - Designed microservices architecture, mentored and reviewed team's work.",
+            "Autorabit / M11N (Apr 2020 – Dec 2020): Technical Lead - Implemented freemium Vault application using Spring Boot, Data Loader microservice, and ELK stack with Kibana dashboards."
+          ]
         },
         {
           "name": "TCS",
