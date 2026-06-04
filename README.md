@@ -32,3 +32,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Using GitHub Copilot with this repository
+
+This repo includes Copilot customization files in `.github/` to help Copilot understand the project structure, conventions, and preferred editing style.
+
+- `.github/copilot-instructions.md` — project overview and repository-specific guidance.
+- `.github/skills.md` — how Copilot should approach tasks, especially for this Next.js/Tailwind portfolio site.
+- `.github/AGENTS.md` — recommended agent roles and their responsibilities.
+- `.github/copilot-prompt.md` — a concise prompt template for consistent assistant behavior.
+
+How to use:
+
+1. Open a Copilot chat in this repository.
+2. Reference the requested change clearly (example: "update hero text", "add a new experience item", "refine dark mode styles").
+3. Copilot should use the `.github/` docs to keep edits small, consistent, and aligned with the existing site.
+
+These files are intended for internal assistant guidance and do not affect build behavior.
