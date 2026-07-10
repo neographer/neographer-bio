@@ -1,0 +1,59 @@
+name: Manual Vercel Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      application:
+        description: 'Application to deploy'
+        required: true
+        type: choice
+        options:
+          - hub
+          - resume
+      environment:
+        description: 'Vercel Environment'
+        required: true
+        type: choice
+        options:
+          - Preview
+          - Production
+
+jobs:
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ github.event.inputs.application == 'hub' && secrets.VERCEL_PROJECT_ID_HUB || secrets.VERCEL_PROJECT_ID_RESUME }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel Project Settings
+        working-directory: apps/${{ github.event.inputs.application }}
+        run: vercel pull --yes --environment=${{ github.event.inputs.environment == 'Production' && 'production' || 'preview' }} --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        working-directory: apps/${{ github.event.inputs.application }}
+        run: vercel build ${{ github.event.inputs.environment == 'Production' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel
+        working-directory: apps/${{ github.event.inputs.application }}
+        run: vercel deploy --prebuilt ${{ github.event.inputs.environment == 'Production' && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }}

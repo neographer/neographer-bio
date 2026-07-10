@@ -1,0 +1,150 @@
+{
+  "name": "Anoop Kumar",
+  "title": "SENIOR JAVA TECHNICAL LEAD & SOLUTION ARCHITECT",
+  "location": "Kochi, India",
+  "phone": "+91 9995575329",
+  "email": "anoopkumar220481@gmail.com",
+  "linkedin": "linkedin.com/in/anoopkumar1243",
+  "github": "github.com/neographer",
+  "summary": "Agile-oriented software leader with 21+ years of engineering experience. Proven track record modernizing enterprise systems, architecting highly resilient microservices, and leading distributed cross-functional engineering teams.",
+  "companies": ["Integer", "Ekomate", "IBM", "Nielsen", "TCS", "Simelabs"],
+  "clients": ["Sprint", "CenturyLink", "Nielsen", "GE Healthcare", "IHG", "West Health", "AutoRABIT", "CSG"],
+  "experience": [
+    {
+      "company": "Simelabs – An Astek Company (formerly Sinergia Media Labs LLC)",
+      "position": "Technical Architect / Solution Architect",
+      "location": "Kerala, India",
+      "start": "04/2020",
+      "end": "05/2026",
+      "current": false,
+      "desc": [
+        "Presales & RFP Architecture: Conducted technical analysis, requirement scoping, and effort estimation for incoming Java enterprise leads; presented solutions directly to international clients to help finalize formal RFPs.",
+        "GIC Singapore Modernization (Onsite): Executed a 2.5-month onsite architectural assessment and codebase audit. Analyzed a vulnerable legacy ecosystem (including EJB, Struts, JSP, Spring Boot, and EOL Apache Olingo 2) and upgraded core apps to Java 21 and Spring Boot 3.x.",
+        "West Health Platform: Analyzed the open-source Project EKA architecture to design a custom, FHIR-compliant medical telemetry framework. Self-learned JS/TS to engineer Vue.js front-ends and NestJS backend APIs.",
+        "AutoRABIT M11N Salesforce Modernization: Collaborated within a core team to decompose monolithic Salesforce CI/CD systems into microservices; engineered the end-to-end lifecycle of the Data Loader microservice using Spring Boot and ELK stack.",
+        "CSG (Cloud Software Group) Demo Center: Provided production support, deep codebase analysis, and resolution for critical platform issues while engineering features within a modular monolithic framework.",
+        "NFC Services: Designed and architected high-throughput backend microservices to securely expose core business functionalities for third-party API integration. Mentored team and conducted peer code reviews."
+      ]
+    },
+    {
+      "company": "Tata Consultancy Services",
+      "position": "Assistant Consultant",
+      "location": "Kochi, India",
+      "start": "04/2014",
+      "end": "03/2020",
+      "desc": [
+        "Technically managed and developed backend REST services for IHG using an Agile approach (2019-2020).",
+        "Agile development of hybrid mobile applications integrating WIDEN and Office 365 APIs for GE Healthcare (2016-2018).",
+        "Developed a Proof of Concept using Python and the ELK stack for calculating IPTE metrics for GE Healthcare (2018).",
+        "Managed, maintained, and supported Nielsen Audio applications with a dedicated engineering team of 10 (2014-2015)."
+      ]
+    },
+    {
+      "company": "Nielsen Audio (formerly Arbitron)",
+      "position": "Specialist",
+      "location": "Kochi, India",
+      "start": "06/2010",
+      "end": "03/2014",
+      "desc": [
+        "Developed and maintained diverse desktop and web products for Arbitron, focusing primarily on Tapscan.",
+        "Designed, developed, and deployed a custom, reusable Multiselect Component using JSF and EJS Treegrid."
+      ]
+    },
+    {
+      "company": "IBM India Pvt. Ltd.",
+      "position": "Application Programmer",
+      "location": "Bengaluru, India",
+      "start": "02/2007",
+      "end": "06/2010",
+      "desc": [
+        "Involved in the development and maintenance of high-volume service delivery systems for clients Sprint & CenturyLink.",
+        "Involved in the development of Point of Sale (POS) applications using the Oracle 360 Tour Framework."
+      ]
+    },
+    {
+      "company": "Ekomate Systems India Pvt. Ltd.",
+      "position": "Software Programmer",
+      "location": "Bengaluru, India",
+      "start": "05/2006",
+      "end": "02/2007",
+      "desc": [
+        "Involved in core product development for an insurance management system tailored for third-party insurance companies (DSRM).",
+        "Technically managed and mentored a team of 3 engineers in modernizing their technology stack."
+      ]
+    },
+    {
+      "company": "Integer Software Solutions",
+      "position": "Software Trainee",
+      "location": "Bengaluru, India",
+      "start": "07/2005",
+      "end": "04/2006",
+      "desc": [
+        "Completed intensive training in core Java web frameworks and assisted with development."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "type": "Languages & Core",
+      "items": ["Java (up to Java 21)", "JavaScript", "TypeScript", "Python"]
+    },
+    {
+      "type": "Frameworks",
+      "items": ["Spring Boot 3.x", "NestJS", "Vue.js", "React.js", "Ionic", "EJB", "Struts", "JSF"]
+    },
+    {
+      "type": "DevOps & Cloud Tools",
+      "items": ["Git", "Maven", "Jenkins", "Docker", "Kubernetes", "ELK Stack", "Webpack", "Jenkins CI/CD"]
+    },
+    {
+      "type": "Standards & Methodologies",
+      "items": ["Agile Development", "Scrum", "FHIR Compliance", "Teamwork", "Technical Mentoring", "Code Auditing", "Core Web Architecture Patterns"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "MG University, Kerala",
+      "degree": "Master of Computer Applications",
+      "location": "Grade: 72.24%",
+      "start": "2005",
+      "end": "2005"
+    },
+    {
+      "institution": "MG University, Kerala",
+      "degree": "Bachelors in Computer Applications",
+      "location": "Grade: 65.18%",
+      "start": "2001",
+      "end": "2001"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "On the Spot Award (2017)",
+      "organization": "TCS-GE",
+      "description": "Recognized for implementing hybrid mobile apps integrating Office 365 APIs."
+    },
+    {
+      "title": "Emerging Star Award (2014)",
+      "organization": "TCS-Nielsen",
+      "description": "Built and mentored a high-performance Service Delivery team within a short timeline."
+    },
+    {
+      "title": "IBM@Sprint Award (2008)",
+      "organization": "IBM India",
+      "description": "Honored for outstanding contributions to mission critical platform stability."
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Anbodu Kochi",
+      "position": "Volunteer",
+      "location": "Kochi, Kerala, India",
+      "start": "2015",
+      "end": "Present",
+      "desc": [
+        "Provided logistics coordination and community relief operations during the severe Chennai (2015) and Kochi (2018) floods."
+      ]
+    }
+  ],
+  "interests": ["Photography", "Travel"]
+}
