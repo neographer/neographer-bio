@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #F8FAFC; /* Slate-50 */
+    --foreground: #0F172A; /* Slate-900 */
+    --card: #FFFFFF;
+    --card-foreground: #0F172A;
+    --border: #E2E8F0; /* Slate-200 */
+    --muted-foreground: #475569; /* Slate-600 */
+    --accent: #0D9488; /* Teal-600 */
+    --accent-glow: rgba(13, 148, 136, 0.06);
+    --grid-color: #E2E8F0;
+    --pattern-color: rgba(71, 85, 105, 0.06);
+  }
+
+  .dark {
+    --background: #09090b; /* zinc-950 */
+    --foreground: #fafafa; /* zinc-50 */
+    --card: #141416; /* zinc-900 slightly darker */
+    --card-foreground: #fafafa;
+    --border: #242427; /* zinc-800 */
+    --muted-foreground: #a1a1aa; /* zinc-400 */
+    --accent: #0D9488; /* Teal-600 */
+    --accent-glow: rgba(13, 148, 136, 0.15);
+    --grid-color: #242427;
+    --pattern-color: rgba(212, 212, 216, 0.04);
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+}
+
+/* Custom Rain Keyframe Animations for background aesthetics */
+@keyframes rain-fall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(800px);
+    opacity: 0;
+  }
+}
+
+.rain-streak {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  animation: rain-fall 4s linear infinite;
+}

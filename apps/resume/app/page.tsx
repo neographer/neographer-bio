@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import mePic from '../public/images/me.jpg'
 import resumeDataRaw from '../data/data.json'
@@ -64,6 +65,18 @@ interface ResumeData {
 const resumeData = resumeDataRaw as unknown as ResumeData;
 
 export default function ResumePage() {
+  const [hubUrl, setHubUrl] = useState('/');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        setHubUrl('http://localhost:3000');
+      } else {
+        setHubUrl('https://neographer.co.in');
+      }
+    }
+  }, []);
+
   return (
     <>
       {/* ========================================================================= */}
@@ -71,6 +84,19 @@ export default function ResumePage() {
       {/* ========================================================================= */}
       <div className="print:hidden min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-teal-200">
         
+        {/* Brand Navigation Bar */}
+        <div className="w-full bg-white border-b border-slate-200 py-3 px-4 shadow-sm">
+          <div className="max-w-5xl mx-auto flex justify-between items-center">
+            {/* Brand Logo */}
+            <a href={hubUrl} className="group flex items-center gap-2.5 font-sans font-bold text-slate-800 text-base transition-colors">
+              <span className="w-6.5 h-6.5 rounded-full border border-teal-500 bg-teal-50 flex items-center justify-center text-xs text-teal-600 font-mono font-bold group-hover:bg-teal-600 group-hover:text-white transition-all duration-300">N</span>
+              <span className="tracking-tight group-hover:text-teal-600 transition-colors">neographer</span>
+            </a>
+            <a href={hubUrl} className="text-xs font-mono text-slate-500 hover:text-teal-600 transition-colors flex items-center gap-1.5">
+              <span>← Back to Landing Hub</span>
+            </a>
+          </div>
+        </div>
 
         {/* Hero Section */}
         <header className="bg-gradient-to-br from-slate-900 via-slate-800 to-teal-950 text-white py-16 px-4">
