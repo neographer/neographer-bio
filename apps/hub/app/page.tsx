@@ -329,9 +329,7 @@ export default function HubPage() {
 
               {/* Blog and Publications */}
               <a 
-                href="https://blog.neographer.co.in" 
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/blog" 
                 className="group/link flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-zinc-900/80 bg-slate-50/50 dark:bg-zinc-950/50 hover:border-teal-500/40 dark:hover:border-teal-500/40 hover:bg-white dark:hover:bg-zinc-900/80 hover:shadow-sm transition-all duration-300"
               >
                 <div className="flex items-center gap-3">
@@ -343,7 +341,7 @@ export default function HubPage() {
                       Publications & Travel Log
                     </h3>
                     <p className="text-[10px] text-slate-400 dark:text-zinc-500 mt-0.5 font-light">
-                      blog.neographer.co.in
+                      /blog
                     </p>
                   </div>
                 </div>
@@ -363,7 +361,7 @@ export default function HubPage() {
         <div className="flex gap-4 sm:gap-6">
           <a href="/resume" className="hover:text-slate-700 dark:hover:text-zinc-300 transition-colors">Resume</a>
           <span className="text-slate-300 dark:text-zinc-800">&middot;</span>
-          <a href="https://blog.neographer.co.in" target="_blank" rel="noopener noreferrer" className="hover:text-slate-700 dark:hover:text-zinc-300 transition-colors">Blog</a>
+          <a href="/blog" className="hover:text-slate-700 dark:hover:text-zinc-300 transition-colors">Blog</a>
           <span className="text-slate-300 dark:text-zinc-800">&middot;</span>
           <a href="/tools" className="hover:text-slate-700 dark:hover:text-zinc-300 transition-colors">Tools</a>
           <span className="text-slate-300 dark:text-zinc-800">&middot;</span>

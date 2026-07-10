@@ -83,24 +83,23 @@ export default function ResumePage() {
       {/* 1. SCREEN VIEW: Interactive Professional Portfolio Website                */}
       {/* ========================================================================= */}
       <div className="print:hidden min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-teal-200">
-        
-        {/* Brand Navigation Bar */}
-        <div className="w-full bg-white border-b border-slate-200 py-3 px-4 shadow-sm">
-          <div className="max-w-5xl mx-auto flex justify-between items-center">
-            {/* Brand Logo */}
-            <a href={hubUrl} className="group flex items-center gap-2.5 font-sans font-bold text-slate-800 text-base transition-colors">
-              <span className="w-6.5 h-6.5 rounded-full border border-teal-500 bg-teal-50 flex items-center justify-center text-xs text-teal-600 font-mono font-bold group-hover:bg-teal-600 group-hover:text-white transition-all duration-300">N</span>
-              <span className="tracking-tight group-hover:text-teal-600 transition-colors">neographer</span>
-            </a>
-            <a href={hubUrl} className="text-xs font-mono text-slate-500 hover:text-teal-600 transition-colors flex items-center gap-1.5">
-              <span>← Back to Landing Hub</span>
-            </a>
-          </div>
-        </div>
 
         {/* Hero Section */}
-        <header className="bg-gradient-to-br from-slate-900 via-slate-800 to-teal-950 text-white py-16 px-4">
-          <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+        <header className="bg-gradient-to-br from-slate-900 via-slate-800 to-teal-950 text-white pt-8 pb-16 px-4">
+          <div className="max-w-5xl mx-auto">
+            {/* Clean Back Navigation Row */}
+            <div className="flex justify-between items-center mb-10 border-b border-white/10 pb-4">
+              <a href={hubUrl} className="group flex items-center gap-2.5 text-white text-sm font-semibold transition-colors">
+                <span className="w-6.5 h-6.5 rounded-full border border-teal-500 bg-teal-500/10 flex items-center justify-center text-[10px] text-teal-400 font-mono font-bold group-hover:bg-teal-500 group-hover:text-slate-950 transition-all duration-300">N</span>
+                <span className="tracking-tight group-hover:text-teal-400 transition-colors">neographer</span>
+              </a>
+              <a href={hubUrl} className="group flex items-center gap-1.5 text-xs font-mono text-slate-300 hover:text-teal-400 transition-colors">
+                <span className="group-hover:-translate-x-1 transition-transform inline-block">←</span>
+                <span>Back to Hub</span>
+              </a>
+            </div>
+
+            <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex-1 text-center md:text-left">
               <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
                 {resumeData.name}
@@ -169,6 +168,7 @@ export default function ResumePage() {
                 />
               </div>
             </div>
+          </div>
           </div>
         </header>
 
