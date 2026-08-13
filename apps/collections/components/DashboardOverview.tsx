@@ -73,7 +73,7 @@ export const MetricCard: React.FC<{
 // DashboardOverview Component containing Dashboard sub-layout
 export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ stats }) => {
   return (
-    <div className="flex-grow flex flex-col justify-between gap-4 h-full overflow-hidden">
+    <div className="flex-grow flex flex-col justify-between gap-4 h-full lg:overflow-hidden">
       
       {/* Top Row: Metric Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 flex-none">
@@ -111,7 +111,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ stats }) =
       </div>
 
       {/* Bottom Row: Charts & Insights Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-grow min-h-0 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:flex-grow lg:min-h-0 overflow-y-auto lg:overflow-hidden pb-4 lg:pb-0">
         
         {/* Column 1: Top Countries Chart */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 flex flex-col justify-between overflow-hidden shadow-xs">

@@ -200,8 +200,8 @@ export const ItemTable: React.FC<ItemTableProps> = ({
               <tr className="bg-slate-50 text-[10px] font-mono text-slate-505 border-b border-slate-200 uppercase tracking-wider sticky top-0 z-10">
                 <th className="py-2.5 px-4 font-semibold">Country</th>
                 <th className="py-2.5 px-4 font-semibold">Face Value & Title</th>
-                <th className="py-2.5 px-4 font-semibold">Year</th>
-                <th className="py-2.5 px-4 font-semibold">Composition</th>
+                <th className="py-2.5 px-4 font-semibold hidden sm:table-cell">Year</th>
+                <th className="py-2.5 px-4 font-semibold hidden md:table-cell">Composition</th>
                 <th className="py-2.5 px-4 font-semibold">Grade</th>
                 <th className="py-2.5 px-4 font-semibold text-right">Est. Value (INR)</th>
               </tr>
@@ -212,14 +212,14 @@ export const ItemTable: React.FC<ItemTableProps> = ({
                   <td className="py-3 px-4 font-medium text-slate-800">{item.Country}</td>
                   <td className="py-3 px-4">
                     <div className="font-semibold text-slate-800">{item.Title}</div>
-                    {item.Currency && (
-                      <div className="text-[10px] text-slate-400 mt-0.5">
-                        {item["Face value"]} {item.Currency} &middot; {item.Type}
-                      </div>
-                    )}
+                    <div className="text-[10px] text-slate-400 mt-0.5">
+                      {item["Face value"]} {item.Currency || ""} &middot; {item.Type}
+                      <span className="sm:hidden"> &middot; {item.Year || item["Gregorian year"]}</span>
+                      <span className="md:hidden">{item.Composition ? ` &middot; ${item.Composition}` : ""}</span>
+                    </div>
                   </td>
-                  <td className="py-3 px-4 font-mono text-slate-500">{item.Year || item["Gregorian year"]}</td>
-                  <td className="py-3 px-4 text-slate-505">{item.Composition || "-"}</td>
+                  <td className="py-3 px-4 font-mono text-slate-500 hidden sm:table-cell">{item.Year || item["Gregorian year"]}</td>
+                  <td className="py-3 px-4 text-slate-505 hidden md:table-cell">{item.Composition || "-"}</td>
                   <td className="py-3 px-4">
                     <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold font-mono ${
                       item.Grade === "UNC" 
