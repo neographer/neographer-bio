@@ -18,6 +18,16 @@ const nextConfig = {
         destination: 'https://resume.neographer.co.in',
         permanent: true,
       },
+      {
+        source: '/collections',
+        destination: 'https://collections.neographer.co.in',
+        permanent: true,
+      },
+      {
+        source: '/ppc',
+        destination: 'https://collections.neographer.co.in/ppc',
+        permanent: true,
+      },
     ]
   },
 }

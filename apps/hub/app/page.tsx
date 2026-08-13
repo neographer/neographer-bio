@@ -117,6 +117,7 @@ export default function HubPage() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mounted, setMounted] = useState(false);
   const [resumeUrl, setResumeUrl] = useState('/resume');
+  const [collectionsUrl, setCollectionsUrl] = useState('/collections');
 
   useEffect(() => {
     // Determine active theme on mount
@@ -127,8 +128,10 @@ export default function HubPage() {
     if (typeof window !== 'undefined') {
       if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         setResumeUrl('http://localhost:3001');
+        setCollectionsUrl('http://localhost:3002');
       } else {
         setResumeUrl('/resume');
+        setCollectionsUrl('/collections');
       }
     }
     setMounted(true);
@@ -347,6 +350,27 @@ export default function HubPage() {
                 </div>
                 <ArrowUpRight size={16} className="text-slate-400 dark:text-zinc-500 group-hover/link:text-teal-600 dark:group-hover/link:text-teal-400 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all duration-300" />
               </a>
+
+              {/* Collections & Archives */}
+              <a 
+                href={collectionsUrl} 
+                className="group/link flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-zinc-900/80 bg-slate-50/50 dark:bg-zinc-950/50 hover:border-teal-500/40 dark:hover:border-teal-500/40 hover:bg-white dark:hover:bg-zinc-900/80 hover:shadow-sm transition-all duration-300"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-1.5 rounded-lg bg-white dark:bg-zinc-850 border border-slate-200 dark:border-zinc-800 text-slate-400 dark:text-zinc-500 group-hover/link:text-teal-600 dark:group-hover/link:text-teal-400 group-hover/link:border-teal-200 dark:group-hover/link:border-zinc-700 transition-all duration-300">
+                    <Coins size={16} />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-medium text-xs text-slate-700 dark:text-zinc-200 group-hover/link:text-slate-950 dark:group-hover/link:text-white transition-colors">
+                      Collections & Archives
+                    </h3>
+                    <p className="text-[10px] text-slate-400 dark:text-zinc-500 mt-0.5 font-light">
+                      collections.neographer.co.in
+                    </p>
+                  </div>
+                </div>
+                <ArrowUpRight size={16} className="text-slate-400 dark:text-zinc-500 group-hover/link:text-teal-600 dark:group-hover/link:text-teal-400 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all duration-300" />
+              </a>
             </div>
           </section>
 
@@ -360,6 +384,8 @@ export default function HubPage() {
         </div>
         <div className="flex gap-4 sm:gap-6">
           <a href="/resume" className="hover:text-slate-700 dark:hover:text-zinc-300 transition-colors">Resume</a>
+          <span className="text-slate-300 dark:text-zinc-800">&middot;</span>
+          <a href="/collections" className="hover:text-slate-700 dark:hover:text-zinc-300 transition-colors">Collections</a>
           <span className="text-slate-300 dark:text-zinc-800">&middot;</span>
           <a href="/blog" className="hover:text-slate-700 dark:hover:text-zinc-300 transition-colors">Blog</a>
           <span className="text-slate-300 dark:text-zinc-800">&middot;</span>
