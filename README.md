@@ -1,51 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Neographer Bio Monorepo
 
-## Getting Started
+This repository is a monorepo managed with **pnpm workspaces** and **Turborepo**. It contains the frontend web properties of the Neographer ecosystem.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
+## Repository Structure
+
+```
+├── apps/
+│   ├── hub/          # The central landing portal (neographer.co.in / neographer.co)
+│   ├── resume/       # Professional ATS-friendly resume portfolio (resume.neographer.co.in)
+│   └── collections/  # Numismatics dashboard & Philately resource portal (collections.neographer.co.in)
+├── packages/
+│   └── ui/           # Shared interface components and assets
+├── .agents/          # AI agent prompt guides and workspace rules
+└── package.json      # Monorepo configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Tech Stack & Guidelines
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+All applications in this monorepo share a unified branding scheme:
+- **Background**: Slate-50 (`#F8FAFC`) — crisp, clean, premium light web layout.
+- **Foreground Text**: Slate-900 (`#0F172A`) — deep professional contrast.
+- **Primary Accent**: Teal-600 (`#0D9488`) — active tags, markers, and buttons.
+- **Borders**: Slate-200 (`#E2E8F0`).
+- **Typography**: Inter (primary sans-serif) + System Monospace (utility labels and code blocks).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+---
 
-## Learn More
+## Local Development
 
-To learn more about Next.js, take a look at the following resources:
+Ensure you have **Node.js** and **pnpm** installed.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Install Dependencies**:
+   ```bash
+   pnpm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. **Run Development Servers**:
+   This will boot up all applications in parallel using Turborepo:
+   ```bash
+   pnpm dev
+   ```
+   - **Hub Portal**: [http://localhost:3000](http://localhost:3000)
+   - **Resume App**: [http://localhost:3001](http://localhost:3001)
+   - **Collections App**: [http://localhost:3002](http://localhost:3002)
 
-## Deploy on Vercel
+3. **Production Compilation**:
+   Verify everything compiles cleanly:
+   ```bash
+   pnpm build
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Collections App Dataset Updates
 
-## Using GitHub Copilot with this repository
-
-This repo includes Copilot customization files in `.github/` to help Copilot understand the project structure, conventions, and preferred editing style.
-
-- `.github/copilot-instructions.md` — project overview and repository-specific guidance.
-- `.github/skills.md` — how Copilot should approach tasks, especially for this Next.js/Tailwind portfolio site.
-- `.github/AGENTS.md` — recommended agent roles and their responsibilities.
-- `.github/copilot-prompt.md` — a concise prompt template for consistent assistant behavior.
-
-How to use:
-
-1. Open a Copilot chat in this repository.
-2. Reference the requested change clearly (example: "update hero text", "add a new experience item", "refine dark mode styles").
-3. Copilot should use the `.github/` docs to keep edits small, consistent, and aligned with the existing site.
-
-These files are intended for internal assistant guidance and do not affect build behavior.
+The `apps/collections` application loads static data at build time. To update the database:
+1. Replace `apps/collections/neographer_export.csv` with a fresh Numista export CSV.
+2. Run the parser script to update data outputs:
+   ```bash
+   node apps/collections/scripts/convert_data.js
+   ```
+3. Re-compile the application or start dev.

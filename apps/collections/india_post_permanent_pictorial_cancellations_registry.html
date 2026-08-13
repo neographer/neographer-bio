@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Post - Permanent Pictorial Cancellations (PPC) Registry</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        postred: '#da251d',
+                        postyellow: '#ffcc00',
+                        postdark: '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar and stamp style borders */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .stamp-edge {
+            background-color: #ffffff;
+            border: 2px dashed #dc2626;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .stamp-postmark {
+            border: 3px double #1e3a8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #1e3a8a;
+            transform: rotate(-12deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Header Banner -->
+    <header class="bg-gradient-to-r from-red-700 via-postred to-red-800 text-white shadow-lg border-b-4 border-yellow-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 bg-yellow-400 text-red-700 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-inner border-2 border-white">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="bg-yellow-400 text-red-900 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Philatelic Archive</span>
+                            <span class="text-red-200 text-xs"><i class="fa-solid fa-building-columns mr-1"></i> India Post Official Database</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1 text-white">
+                            Permanent Pictorial Cancellations of India
+                        </h1>
+                        <p class="text-red-100 text-sm mt-0.5">Comprehensive State-Wise Registry, Postal Locations, Historic Landmarks & Design Catalog</p>
+                    </div>
+                </div>
+
+                <!-- Export & Quick Actions -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button id="exportCsvBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-file-excel text-base"></i>
+                        <span>Export to Sheet (CSV)</span>
+                    </button>
+                    <button id="exportJsonBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2.5 rounded-xl font-semibold text-sm shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-file-code text-base"></i>
+                        <span>JSON</span>
+                    </button>
+                    <button id="openGuideBtn" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-3.5 py-2.5 rounded-xl font-medium text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>Philately Guide</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <section class="bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-red-100 text-red-700 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-stamp"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total PPCs</div>
+                        <div id="statTotal" class="text-2xl font-bold text-slate-800">0</div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">States & UTs</div>
+                        <div id="statStates" class="text-2xl font-bold text-slate-800">0</div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Categories</div>
+                        <div id="statCategories" class="text-2xl font-bold text-slate-800">0</div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Active Status</div>
+                        <div id="statActive" class="text-2xl font-bold text-slate-800">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Toolbar -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-6">
+            <div class="flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center">
+                
+                <!-- Search Box -->
+                <div class="relative flex-grow max-w-lg">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Search by Post Office, Place, PIN Code, Subject, District..." 
+                           class="w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition">
+                    <button id="clearSearch" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Dropdown Controls -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <!-- State Filter -->
+                    <div class="min-w-[160px]">
+                        <select id="stateFilter" class="w-full py-2.5 px-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition">
+                            <option value="ALL">All States & UTs</option>
+                        </select>
+                    </div>
+
+                    <!-- Category Filter -->
+                    <div class="min-w-[160px]">
+                        <select id="categoryFilter" class="w-full py-2.5 px-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition">
+                            <option value="ALL">All Categories</option>
+                        </select>
+                    </div>
+
+                    <!-- View Switcher Toggle -->
+                    <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+                        <button id="tableViewBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-800 bg-white shadow-sm flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-table-cells"></i>
+                            <span class="hidden sm:inline">Table</span>
+                        </button>
+                        <button id="cardViewBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-address-card"></i>
+                            <span class="hidden sm:inline">Cards</span>
+                        </button>
+                    </div>
+
+                    <!-- Reset Filters -->
+                    <button id="resetFiltersBtn" class="p-2.5 text-slate-500 hover:text-red-600 border border-slate-200 hover:border-red-300 rounded-xl transition" title="Reset Filters">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Category Tags -->
+            <div id="categoryBadgeContainer" class="flex flex-wrap gap-2 mt-4 pt-3 border-t border-slate-100">
+                <!-- Dynamically populated category tags -->
+            </div>
+        </div>
+
+        <!-- Results Summary Bar -->
+        <div class="flex justify-between items-center mb-4 px-1 text-xs sm:text-sm text-slate-500 font-medium">
+            <div>
+                Showing <span id="showingCount" class="font-bold text-slate-800">0</span> matching cancellations
+            </div>
+            <div class="flex items-center gap-2">
+                <span>Sort by:</span>
+                <select id="sortSelect" class="bg-transparent font-semibold text-slate-700 cursor-pointer focus:outline-none">
+                    <option value="state-asc">State (A-Z)</option>
+                    <option value="state-desc">State (Z-A)</option>
+                    <option value="po-asc">Post Office (A-Z)</option>
+                    <option value="subject-asc">Subject (A-Z)</option>
+                    <option value="date-desc">Newest First</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Table View Container -->
+        <div id="tableViewSection" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="bg-slate-100 border-b border-slate-200 text-xs uppercase tracking-wider text-slate-600 font-semibold">
+                            <th class="py-3.5 px-4">State / UT</th>
+                            <th class="py-3.5 px-4">Post Office & PIN</th>
+                            <th class="py-3.5 px-4">District</th>
+                            <th class="py-3.5 px-4">Cancellation Subject</th>
+                            <th class="py-3.5 px-4">Category</th>
+                            <th class="py-3.5 px-4">Introduced</th>
+                            <th class="py-3.5 px-4">Status</th>
+                            <th class="py-3.5 px-4 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-100 font-normal">
+                        <!-- Table rows generated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="noResultsTable" class="hidden p-12 text-center text-slate-500">
+                <i class="fa-solid fa-box-open text-4xl mb-3 text-slate-300"></i>
+                <p class="text-base font-semibold">No permanent pictorial cancellations matched your query.</p>
+                <p class="text-xs text-slate-400 mt-1">Try resetting search keywords or state filters.</p>
+            </div>
+        </div>
+
+        <!-- Grid View Container -->
+        <div id="cardViewSection" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Cards generated dynamically -->
+        </div>
+        <div id="noResultsCard" class="hidden bg-white p-12 text-center text-slate-500 rounded-2xl border border-slate-200">
+            <i class="fa-solid fa-box-open text-4xl mb-3 text-slate-300"></i>
+            <p class="text-base font-semibold">No cancellations match the selected criteria.</p>
+        </div>
+    </main>
+
+    <!-- Detailed View Modal -->
+    <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-red-700 to-red-800 text-white p-6 relative">
+                <button id="closeModalBtn" class="absolute top-5 right-5 text-white/80 hover:text-white bg-black/20 hover:bg-black/40 w-8 h-8 rounded-full flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="flex items-center gap-2 mb-1">
+                    <span id="modalStateBadge" class="bg-yellow-400 text-red-950 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider"></span>
+                    <span id="modalCategoryBadge" class="bg-white/20 text-white text-xs font-medium px-2.5 py-0.5 rounded-full"></span>
+                </div>
+                <h2 id="modalSubject" class="text-2xl font-bold mt-1 text-white"></h2>
+                <p id="modalPostOffice" class="text-red-100 text-sm mt-1 flex items-center gap-1.5">
+                    <i class="fa-solid fa-location-dot"></i> <span></span>
+                </p>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div class="p-6 space-y-6 flex-grow">
+                
+                <!-- Stamp Postmark Preview Display -->
+                <div class="bg-amber-50/60 border border-amber-200 rounded-xl p-4 flex flex-col md:flex-row items-center gap-5">
+                    <div class="w-32 h-32 bg-white rounded-full border-4 border-dashed border-blue-900 flex flex-col items-center justify-center text-center p-2 text-blue-900 shadow-inner flex-shrink-0 transform -rotate-3">
+                        <i class="fa-solid fa-stamp text-2xl mb-1 text-red-600"></i>
+                        <span id="modalStampPo" class="text-[10px] font-bold uppercase leading-tight"></span>
+                        <span id="modalStampDate" class="text-[9px] font-mono text-slate-600 my-0.5"></span>
+                        <span id="modalStampPincode" class="text-[10px] font-bold"></span>
+                    </div>
+                    <div class="space-y-2 text-sm text-slate-700">
+                        <div class="font-semibold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-red-600"></i> Cancellation Line Diagram Motif
+                        </div>
+                        <p id="modalMotifDesc" class="text-xs leading-relaxed text-slate-600"></p>
+                        <div class="grid grid-cols-2 gap-3 text-xs pt-1">
+                            <div><strong class="text-slate-900">Introduction Date:</strong> <span id="modalIntroDate"></span></div>
+                            <div><strong class="text-slate-900">Current Status:</strong> <span id="modalStatus"></span></div>
+                            <div><strong class="text-slate-900">District:</strong> <span id="modalDistrict"></span></div>
+                            <div><strong class="text-slate-900">Postal PIN Code:</strong> <span id="modalPincode"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Information Sections -->
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-landmark text-amber-600"></i> Place Significance & Heritage Details
+                    </h3>
+                    <p id="modalPlaceDetails" class="text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-200"></p>
+                </div>
+
+                <!-- Philatelic Instructions -->
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-envelope text-red-600"></i> How to Obtain This Cancellation by Post
+                    </h3>
+                    <div class="text-xs text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                        <p><strong>1. Prepare Cover:</strong> Address a blank or commemorative postcard/envelope with appropriate postage stamp affixed.</p>
+                        <p><strong>2. Outer Envelope:</strong> Insert your prepared cover inside an outer envelope addressed to: <em>The Postmaster, <span id="modalPostalAddress"></span></em>.</p>
+                        <p><strong>3. Request Letter:</strong> Include a polite request asking for the Permanent Pictorial Cancellation to be applied neatly on the stamp, and request the cover to be dispatched back to your address.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200 flex justify-between items-center rounded-b-2xl">
+                <button id="copyDetailsBtn" class="text-slate-700 hover:text-slate-900 text-xs font-semibold px-3 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 transition flex items-center gap-1.5">
+                    <i class="fa-regular fa-copy"></i> Copy Information
+                </button>
+                <button id="closeModalBottomBtn" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow transition">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Philately Guide Modal -->
+    <div id="guideModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 p-6">
+            <div class="flex justify-between items-center pb-4 border-b border-slate-200">
+                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-book-bookmark text-red-600"></i> Understanding Permanent Pictorial Cancellations
+                </h3>
+                <button id="closeGuideBtn" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="py-4 text-sm text-slate-600 space-y-4 leading-relaxed">
+                <p>
+                    <strong>What is a Permanent Pictorial Cancellation (PPC)?</strong><br>
+                    A Permanent Pictorial Cancellation is a special postmark provided by India Post at designated post offices located near major historical monuments, wildlife sanctuaries, places of pilgrimage, or cultural heritage sites. Unlike regular circular date stamps, PPCs depict line diagrams or artistic representations of local landmarks.
+                </p>
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-3.5 rounded-r-xl text-xs text-amber-900">
+                    <i class="fa-solid fa-lightbulb text-amber-600 mr-1"></i> <strong>Historical Note:</strong> Permanent pictorial cancellations were first introduced in India in 1951-1954 (e.g., Qutub Minar, Sanchi Stupa, Ajanta Caves). A major expansion phase occurred in 1974-1977.
+                </div>
+                <h4 class="font-bold text-slate-800 pt-2">How Collectors Obtain PPCs:</h4>
+                <ol class="list-decimal pl-5 space-y-1.5 text-xs">
+                    <li><strong>In Person:</strong> Visit the designated Post Office and request the postal clerk to hand-cancel your stamped mail or cover.</li>
+                    <li><strong>By Postal Request (Mailing Method):</strong>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>Affix adequate postage onto an envelope/postcard.</li>
+                            <li>Place it inside a larger outer envelope.</li>
+                            <li>Address it to <em>"The Postmaster, [Post Office Name], [District], [State] - [PIN]"</em>.</li>
+                            <li>Enclose a short note requesting the application of the Permanent Pictorial Cancellation on the stamp.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <div class="pt-4 border-t border-slate-200 text-right">
+                <button id="closeGuideBottomBtn" class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow">
+                    Got It
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application JavaScript Code -->
+    <script>
+        // Master Dataset of Permanent Pictorial Cancellations of India
+        const PPC_DATA = [
+            // DELHI
+            {
+                id: "DEL-001",
+                state: "Delhi",
+                district: "Central Delhi",
+                poName: "Sansad Marg SO",
+                pincode: "110001",
+                subject: "Parliament of India (Sansad Bhavan)",
+                category: "Leaders & Institutions",
+                introDate: "13.02.1995",
+                status: "Working",
+                motif: "Illustrates the majestic circular colonnade architecture of the historic Parliament House building.",
+                details: "Sansad Bhavan is the iconic seat of the Parliament of India in New Delhi. Designed by British architects Sir Edwin Lutyens and Sir Herbert Baker, it was inaugurated in 1927. The cancellation celebrates India's vibrant democracy."
+            },
+            {
+                id: "DEL-002",
+                state: "Delhi",
+                district: "Central Delhi",
+                poName: "Rashtrapati Bhavan SO",
+                pincode: "110004",
+                subject: "Rashtrapati Bhavan (Presidential Residence)",
+                category: "Heritage & Monuments",
+                introDate: "26.05.2014",
+                status: "Working",
+                motif: "Line drawing of the central dome and front facade of the Rashtrapati Bhavan.",
+                details: "Rashtrapati Bhavan is the official residence of the President of India at the western end of Rajpath in New Delhi. It features a massive 340-room main building combining classical Greco-Roman and Indian architectural elements."
+            },
+            {
+                id: "DEL-003",
+                state: "Delhi",
+                district: "North Delhi",
+                poName: "Red Fort Philatelic Gallery SO",
+                pincode: "110006",
+                subject: "Red Fort (Lal Qila)",
+                category: "Heritage & Monuments",
+                introDate: "22.11.2023",
+                status: "Working",
+                motif: "Depicts the Lahore Gate ramparts and octagonal sandstone towers of the UNESCO World Heritage Red Fort.",
+                details: "Built by Mughal Emperor Shah Jahan in 1638 when he shifted his capital from Agra to Delhi. Red Fort symbolizes Indian independence, where the Prime Minister hoists the national flag every Independence Day."
+            },
+            {
+                id: "DEL-004",
+                state: "Delhi",
+                district: "Central Delhi",
+                poName: "National Philatelic Museum",
+                pincode: "110001",
+                subject: "Peacock (Philately Logo)",
+                category: "Culture & Folk Art",
+                introDate: "04.07.2024",
+                status: "Working",
+                motif: "Features the stylized national bird Peacock holding a envelope stamp emblem.",
+                details: "Located at Dak Bhawan on Parliament Street, the National Philatelic Museum houses rare Indian postal stamps, first-day covers, and historical postal archives operated by Department of Posts."
+            },
+
+            // HIMACHAL PRADESH
+            {
+                id: "HP-001",
+                state: "Himachal Pradesh",
+                district: "Shimla",
+                poName: "Shimla GPO",
+                pincode: "171001",
+                subject: "Himalayan Monal (State Bird)",
+                category: "Wildlife & Nature",
+                introDate: "28.05.2004",
+                status: "Working",
+                motif: "Depicts the iridescent-crested Himalayan Monal pheasant perched on a pine branch.",
+                details: "The Himalayan Monal (Lophophorus impejanus) is the state bird of Himachal Pradesh. Renowned for its brilliant metallic multicolored plumage, it inhabits high-altitude oak-conifer forests of the Himalayas."
+            },
+            {
+                id: "HP-002",
+                state: "Himachal Pradesh",
+                district: "Lahaul and Spiti",
+                poName: "Hikkim BO",
+                pincode: "172114",
+                subject: "World's Highest Post Office",
+                category: "Geography & Landmarks",
+                introDate: "22.03.2022",
+                status: "Working",
+                motif: "Depicts the traditional mud-brick Hikkim Post Office structure against snowy Spiti peaks.",
+                details: "Situated at an altitude of 14,567 feet (4,440 m) in the Spiti Valley, Hikkim is world-famous as the highest functioning post office in the world, receiving thousands of traveler postcards annually."
+            },
+            {
+                id: "HP-003",
+                state: "Himachal Pradesh",
+                district: "Lahaul and Spiti",
+                poName: "Tabo SO",
+                pincode: "172113",
+                subject: "Tabo Monastery (Ajanta of the Himalayas)",
+                category: "Spiritual & Pilgrimage",
+                introDate: "22.03.2022",
+                status: "Working",
+                motif: "Features the ancient stupa mud-facade structure of Tabo Gompa.",
+                details: "Founded in 996 AD by Tibetan Buddhist translator Rinchen Zangpo, Tabo Monastery is renowned for its invaluable collection of frescoes, manuscripts, and statues preserved in high desert cold climate."
+            },
+            {
+                id: "HP-004",
+                state: "Himachal Pradesh",
+                district: "Kullu",
+                poName: "Manali SO",
+                pincode: "175131",
+                subject: "Sri Hadimba Devi Temple",
+                category: "Spiritual & Pilgrimage",
+                introDate: "16.08.2004",
+                status: "Working",
+                motif: "Features four-tiered wooden pagoda roof architecture surrounded by Dhungri deodar forests.",
+                details: "Built in 1553 AD by Maharaja Bahadur Singh, this cave temple is dedicated to Hadimba Devi, wife of Bhima from the epic Mahabharata. It is famous for intricate wooden carvings and pagoda roof."
+            },
+            {
+                id: "HP-005",
+                state: "Himachal Pradesh",
+                district: "Kangra",
+                poName: "Bir SO",
+                pincode: "176077",
+                subject: "Himalayas & Paragliding in Bir Billing",
+                category: "Geography & Landmarks",
+                introDate: "26.11.2022",
+                status: "Working",
+                motif: "Paraglider soaring over the snow-capped Dhauladhar Himalayan range.",
+                details: "Bir Billing in Kangra district is globally acclaimed as the Paragliding Capital of India and host of Paragliding World Cups, offering stunning views of Dhauladhar mountain peaks."
+            },
+
+            // KERALA
+            {
+                id: "KER-001",
+                state: "Kerala",
+                district: "Idukki",
+                poName: "Thekkady SO",
+                pincode: "685536",
+                subject: "Asian Elephant (Periyar Wildlife Sanctuary)",
+                category: "Wildlife & Nature",
+                introDate: "11.10.1975",
+                status: "Working",
+                motif: "Tusked Asian Elephant wading in Periyar lake waters.",
+                details: "Periyar National Park and Wildlife Sanctuary in Thekkady is a premier elephant and tiger reserve situated high in the Cardamom Hills of the Western Ghats."
+            },
+            {
+                id: "KER-002",
+                state: "Kerala",
+                district: "Pathanamthitta",
+                poName: "Sabarimala PO",
+                pincode: "689713",
+                subject: "Holy Eighteen Steps (Patinettam Padi) - Sabarimala",
+                category: "Spiritual & Pilgrimage",
+                introDate: "16.11.1974",
+                status: "Working",
+                motif: "Holy 18 gold-plated steps leading to the sanctum sanctorum of Lord Ayyappa temple.",
+                details: "Sabarimala is one of the world's largest annual pilgrimage sites, attracting millions of devotees. The Post Office operates seasonally during the Mandala-Makaravilakku pilgrimage period."
+            },
+            {
+                id: "KER-003",
+                state: "Kerala",
+                district: "Kasaragod",
+                poName: "Bekal Fort SO",
+                pincode: "671316",
+                subject: "Bekal Fort & Keyhole Tower",
+                category: "Heritage & Monuments",
+                introDate: "08.01.2003",
+                status: "Working",
+                motif: "Observation keyhole tower overlooking the Arabian Sea coastline.",
+                details: "Bekal Fort is the largest sea fort in Kerala, built by Shivappa Nayaka of Keladi in 1650 AD. Its strategic coastline positioning features a keyhole-shaped layout and grand water tank."
+            },
+            {
+                id: "KER-004",
+                state: "Kerala",
+                district: "Ernakulam",
+                poName: "Mattancherry Jetty SO",
+                pincode: "682002",
+                subject: "Magen David - Paradesi Synagogue",
+                category: "Heritage & Monuments",
+                introDate: "28.02.1977",
+                status: "Working",
+                motif: "Six-pointed Star of David symbol of the historic Paradesi Synagogue.",
+                details: "Constructed in 1568 by Spanish-speaking Sephardic Jews, the Paradesi Synagogue in Mattancherry (Kochi) is the oldest active synagogue in the Commonwealth of Nations, famous for hand-painted Chinese willow tiles."
+            },
+            {
+                id: "KER-005",
+                state: "Kerala",
+                district: "Pathanamthitta",
+                poName: "Aranmula SO",
+                pincode: "689533",
+                subject: "Aranmula Snake Boat & Metal Mirror (Kannadi)",
+                category: "Culture & Folk Art",
+                introDate: "12.09.2008",
+                status: "Working",
+                motif: "Traditional Palliyodam snake boat alongside the famous Aranmula metal mirror outline.",
+                details: "Aranmula on Pamba River is globally famous for the Aranmula Uthrattathi Boat Race and the GI-tagged Aranmula Kannadi—a unique front-surface metal-alloy mirror made using secret traditional metalworking craft."
+            },
+
+            // TAMIL NADU
+            {
+                id: "TN-001",
+                state: "Tamil Nadu",
+                district: "Thanjavur",
+                poName: "Thanjavur HO",
+                pincode: "613001",
+                subject: "Brihadeeswarar Temple (Big Temple)",
+                category: "Heritage & Monuments",
+                introDate: "16.12.1974",
+                status: "Working",
+                motif: "Vimana tower and Nandi pavilion of the UNESCO World Heritage Chola Temple.",
+                details: "Built by Emperor Raja Raja Chola I in 1010 AD, Brihadeeswarar Temple is a masterpiece of Dravidian architecture featuring a massive 216 ft granite vimana tower topped by an 80-ton single stone capstone."
+            },
+            {
+                id: "TN-002",
+                state: "Tamil Nadu",
+                district: "Kanyakumari",
+                poName: "Kanyakumari SO",
+                pincode: "629702",
+                subject: "Vivekananda Rock Memorial & Thiruvalluvar Statue",
+                category: "Heritage & Monuments",
+                introDate: "15.01.1975",
+                status: "Working",
+                motif: "Rock island memorial twin structures at the confluence of Indian Ocean, Arabian Sea, and Bay of Bengal.",
+                details: "Located on a offshore rock island where Swami Vivekananda meditated in 1892, alongside the 133-foot tall stone statue of Tamil philosopher-poet Thiruvalluvar."
+            },
+            {
+                id: "TN-003",
+                state: "Tamil Nadu",
+                district: "Chengalpattu",
+                poName: "Mahabalipuram SO",
+                pincode: "603104",
+                subject: "Shore Temple & Pancha Rathas",
+                category: "Heritage & Monuments",
+                introDate: "01.01.1965",
+                status: "Working",
+                motif: "Structural coastal stone Shore Temple of Mamallapuram.",
+                details: "Built by Pallava King Narasimhavarman II in the 8th century AD, Mahabalipuram is famous for monolithic rock-cut cave temples and shore temple architectural sculptures."
+            },
+            {
+                id: "TN-004",
+                state: "Tamil Nadu",
+                district: "Nilgiris",
+                poName: "Mudumalai BO",
+                pincode: "643223",
+                subject: "Indian Gaur (Bison)",
+                category: "Wildlife & Nature",
+                introDate: "20.10.1978",
+                status: "Working",
+                motif: "Profile depiction of the massive Indian Gaur (Bos gaurus).",
+                details: "Mudumalai National Park and Tiger Reserve in Nilgiris is a vital sanctuary connecting Western Ghats wildlife corridors home to gaurs, elephants, and Bengal tigers."
+            },
+
+            // KARNATAKA
+            {
+                id: "KAR-001",
+                state: "Karnataka",
+                district: "Vijayanagara",
+                poName: "Hampi BO",
+                pincode: "583239",
+                subject: "Stone Chariot at Vittala Temple",
+                category: "Heritage & Monuments",
+                introDate: "01.11.1976",
+                status: "Working",
+                motif: "The world-famous Stone Chariot (Garuda Shrine) of Hampi.",
+                details: "Hampi was the majestic capital of the Vijayanagara Empire in the 14th century. The Stone Chariot at Vittala Temple complex is an iconic symbol of Indian heritage featured on the ₹50 currency note."
+            },
+            {
+                id: "KAR-002",
+                state: "Karnataka",
+                district: "Hassan",
+                poName: "Belur SO",
+                pincode: "573115",
+                subject: "Darpana Sundari (Shilabalika)",
+                category: "Culture & Folk Art",
+                introDate: "15.08.1975",
+                status: "Working",
+                motif: "Carved soapstone Shilabalika maiden admiring herself in a mirror.",
+                details: "Chennakeshava Temple at Belur was commissioned by Hoysala King Vishnuvardhana in 1117 AD. The temple exterior contains 42 bracket figures (Shilabalikas) showcasing exceptional ancient stone sculpture finesse."
+            },
+            {
+                id: "KAR-003",
+                state: "Karnataka",
+                district: "Hassan",
+                poName: "Shravanabelagola SO",
+                pincode: "573135",
+                subject: "Lord Gommateshwara (Bahubali Statue)",
+                category: "Spiritual & Pilgrimage",
+                introDate: "22.01.1975",
+                status: "Working",
+                motif: "57-foot monolithic statue of Lord Bahubali standing on Vindhyagiri hill.",
+                details: "Carved from single granite block in 981 AD under Western Ganga Dynasty minister Chavundaraya. It is one of the largest free-standing monolithic statues in the world, venue of Mahamastakabhisheka."
+            },
+            {
+                id: "KAR-004",
+                state: "Karnataka",
+                district: "Ballari",
+                poName: "Daroji Bear Sanctuary BO",
+                pincode: "583129",
+                subject: "Indian Sloth Bear",
+                category: "Wildlife & Nature",
+                introDate: "01.11.2008",
+                status: "Working",
+                motif: "Indian Sloth Bear amidst rocky scrub hills.",
+                details: "Daroji Sloth Bear Sanctuary near Hampi was created in 1994 specifically for the protection of native Indian Sloth Bears (Melursus ursinus) in Deccan thorn scrub forest habitats."
+            },
+
+            // MAHARASHTRA
+            {
+                id: "MAH-001",
+                state: "Maharashtra",
+                district: "Chhatrapati Sambhajinagar",
+                poName: "Ajanta Caves BO",
+                pincode: "431117",
+                subject: "Six-Tusked Elephant / Cave Entrance",
+                category: "Heritage & Monuments",
+                introDate: "08.01.1965",
+                status: "Working",
+                motif: "Six-tusked elephant Jataka story motif and Cave 19 facade.",
+                details: "Ajanta Caves feature 30 rock-cut Buddhist cave monuments dating from 2nd century BCE to 480 CE. Famous worldwide for exquisite ancient frescoes and murals illustrating Jataka tales."
+            },
+            {
+                id: "MAH-002",
+                state: "Maharashtra",
+                district: "Chhatrapati Sambhajinagar",
+                poName: "Ellora Caves BO",
+                pincode: "431102",
+                subject: "Kailasha Temple Carved Pillars (Cave 16)",
+                category: "Heritage & Monuments",
+                introDate: "08.01.1965",
+                status: "Working",
+                motif: "Monolithic monolithic carved elephant and pillars of Kailash Temple.",
+                details: "Cave 16 (Kailasha Temple) is the largest single monolithic rock excavation in the world, carved top-down out of basalt cliff face under Rashtrakuta King Krishna I in the 8th century."
+            },
+            {
+                id: "MAH-003",
+                state: "Maharashtra",
+                district: "Mumbai City",
+                poName: "Mumbai GPO",
+                pincode: "400001",
+                subject: "Gateway of India & GPO Heritage Dome",
+                category: "Heritage & Monuments",
+                introDate: "26.01.1977",
+                status: "Working",
+                motif: "Indo-Saracenic arch of Gateway of India and Mumbai GPO central dome.",
+                details: "Gateway of India was built to commemorate the landing of King George V in 1911. Mumbai GPO is an architectural marvel designed by John Begg in 1913 inspired by Bijapur's Gol Gumbaz."
+            },
+            {
+                id: "MAH-004",
+                state: "Maharashtra",
+                district: "Thane",
+                poName: "Airoli Node SO",
+                pincode: "400708",
+                subject: "Greater Flamingo (Thane Creek Sanctuary)",
+                category: "Wildlife & Nature",
+                introDate: "23.01.2025",
+                status: "Working",
+                motif: "Flock of long-necked Greater Flamingos feeding in mudflats.",
+                details: "Thane Creek Flamingo Sanctuary is a vital urban wetland habitat in Navi Mumbai where tens of thousands of migratory flamingos gather every winter season."
+            },
+
+            // GUJARAT
+            {
+                id: "GUJ-001",
+                state: "Gujarat",
+                district: "Ahmedabad",
+                poName: "Sabarmati Ashram SO",
+                pincode: "380027",
+                subject: "Mahatma Gandhi & Charkha",
+                category: "Leaders & Institutions",
+                introDate: "02.10.1975",
+                status: "Working",
+                motif: "Mahatma Gandhi's spinning wheel (Charkha) and Hriday Kunj cottage.",
+                details: "Sabarmati Ashram on the banks of Sabarmati River served as the headquarters of Mahatma Gandhi during India's freedom movement from 1917 to 1930, launch site of historic Dandi Salt March."
+            },
+            {
+                id: "GUJ-002",
+                state: "Gujarat",
+                district: "Junagadh",
+                poName: "Sasan Gir BO",
+                pincode: "362135",
+                subject: "Asiatic Lion (Gir Forest)",
+                category: "Wildlife & Nature",
+                introDate: "15.08.1976",
+                status: "Working",
+                motif: "Roaring Asiatic Lion male head profile.",
+                details: "Gir National Park and Wildlife Sanctuary is the sole natural home of the endangered Asiatic Lion (Panthera leo persica) in the world, established in 1965."
+            },
+            {
+                id: "GUJ-003",
+                state: "Gujarat",
+                district: "Surendranagar",
+                poName: "Dhrangadhra HO",
+                pincode: "363310",
+                subject: "Indian Wild Ass (Khur)",
+                category: "Wildlife & Nature",
+                introDate: "20.10.1982",
+                status: "Working",
+                motif: "Indian Wild Ass galloping across Little Rann of Kutch salt flats.",
+                details: "The Wild Ass Sanctuary in Little Rann of Kutch is the last refuge of the endangered Indian Wild Ass (Equus hemionus khur), known locally as Khur."
+            },
+            {
+                id: "GUJ-004",
+                state: "Gujarat",
+                district: "Ahmedabad",
+                poName: "Sidi Saiyyed SO",
+                pincode: "380001",
+                subject: "Sidi Saiyyed Jali (Tree of Life)",
+                category: "Heritage & Monuments",
+                introDate: "15.04.1978",
+                status: "Working",
+                motif: "Intricate stone latticework window depicting intertwining tree branches.",
+                details: "Built in 1572 AD, the Sidi Saiyyed Mosque is famed for its ten stone pier carved windows (jalis), serving as an unofficial symbol of Ahmedabad city and logo of IIM Ahmedabad."
+            },
+
+            // MADHYA PRADESH
+            {
+                id: "MP-001",
+                state: "Madhya Pradesh",
+                district: "Raisen",
+                poName: "Sanchi SO",
+                pincode: "464661",
+                subject: "Great Stupa of Sanchi & Torana Gateway",
+                category: "Heritage & Monuments",
+                introDate: "30.11.1952",
+                status: "Working",
+                motif: "Sanchi Stupa dome and carved stone Torana gateway.",
+                details: "One of the oldest stone structures in India, commissioned by Emperor Ashoka in 3rd century BCE. Sanchi Stupa was among the first permanent pictorial postmarks created in independent India."
+            },
+            {
+                id: "MP-002",
+                state: "Madhya Pradesh",
+                district: "Chhatarpur",
+                poName: "Khajuraho SO",
+                pincode: "471606",
+                subject: "Kandariya Mahadeva Temple",
+                category: "Heritage & Monuments",
+                introDate: "01.01.1965",
+                status: "Working",
+                motif: "Shikhara spire and sculptural friezes of Kandariya Mahadeva Temple.",
+                details: "Khajuraho Group of Monuments were built by Chandela Dynasty between 950 and 1050 AD. Celebrated for Nagara-style architecture and exquisite expressive sculptures."
+            },
+            {
+                id: "MP-003",
+                state: "Madhya Pradesh",
+                district: "Raisen",
+                poName: "Bhimbetka BO",
+                pincode: "464993",
+                subject: "Prehistoric Cave Paintings",
+                category: "Heritage & Monuments",
+                introDate: "18.04.2008",
+                status: "Working",
+                motif: "Rock painting outline of ancient hunter riding horse holding spear.",
+                details: "Bhimbetka rock shelters exhibit the earliest traces of human life in India, featuring Mesolithic hunter-gatherer cave paintings dating back over 10,000 years."
+            },
+
+            // RAJASTHAN
+            {
+                id: "RAJ-001",
+                state: "Rajasthan",
+                district: "Jaisalmer",
+                poName: "Jaisalmer Fort SO",
+                pincode: "345001",
+                subject: "Sonar Quila (Golden Fort)",
+                category: "Heritage & Monuments",
+                introDate: "26.01.1977",
+                status: "Working",
+                motif: "Yellow sandstone fort bastions rising above Thar desert dunes.",
+                details: "Built in 1156 AD by Rajput ruler Rawal Jaisal, Jaisalmer Fort is one of the few living forts in the world, home to one-fourth of the city's population inside its golden walls."
+            },
+            {
+                id: "RAJ-002",
+                state: "Rajasthan",
+                district: "Bharatpur",
+                poName: "Keoladeo Ghana NP SO",
+                pincode: "321001",
+                subject: "Siberian Crane & Migratory Waterfowl",
+                category: "Wildlife & Nature",
+                introDate: "12.11.1983",
+                status: "Working",
+                motif: "Pair of Siberian Cranes amidst wetland reeds.",
+                details: "Keoladeo National Park (formerly Bharatpur Bird Sanctuary) is a world-renowned wintering ground for thousands of waterfowl and rare migratory birds."
+            },
+            {
+                id: "RAJ-003",
+                state: "Rajasthan",
+                district: "Udaipur",
+                poName: "Udaipur HO",
+                pincode: "313001",
+                subject: "Lake Palace (Jag Niwas) - Lake Pichola",
+                category: "Heritage & Monuments",
+                introDate: "01.11.1976",
+                status: "Working",
+                motif: "White marble palace floating on Lake Pichola waters.",
+                details: "Built between 1743 and 1746 by Maharana Jagat Singh II as a summer palace, Jag Niwas is a breathtaking example of Mewar royal architecture."
+            },
+
+            // WEST BENGAL
+            {
+                id: "WB-001",
+                state: "West Bengal",
+                district: "Darjeeling",
+                poName: "Darjeeling HO",
+                pincode: "734101",
+                subject: "Darjeeling Himalayan Railway (Toy Train)",
+                category: "Geography & Landmarks",
+                introDate: "22.04.2002",
+                status: "Working",
+                motif: "Steam engine narrow-gauge Toy Train winding around Batasia Loop.",
+                details: "Built between 1879 and 1881, the DHR Toy Train is a UNESCO World Heritage site operating on 2-foot narrow gauge tracks climbing through Himalayan tea gardens."
+            },
+            {
+                id: "WB-002",
+                state: "West Bengal",
+                district: "Birbhum",
+                poName: "Santiniketan SO",
+                pincode: "731235",
+                subject: "Visva-Bharati & Rabindranath Tagore",
+                category: "Leaders & Institutions",
+                introDate: "08.05.1986",
+                status: "Working",
+                motif: "Upasana Griha (Prayer Hall) glass structure and Tagore portrait emblem.",
+                details: "Santiniketan was founded by Maharshi Debendranath Tagore and expanded by Nobel Laureate Rabindranath Tagore into Visva-Bharati University, recently named a UNESCO World Heritage site."
+            },
+
+            // ODISHA
+            {
+                id: "OD-001",
+                state: "Odisha",
+                district: "Puri",
+                poName: "Konark SO",
+                pincode: "752111",
+                subject: "Sun Temple Chariot Wheel (Konark)",
+                category: "Heritage & Monuments",
+                introDate: "01.01.1965",
+                status: "Working",
+                motif: "Intricately carved stone sundial chariot wheel of Konark.",
+                details: "Built in 1250 AD by Eastern Ganga King Narasimhadeva I, Konark Sun Temple is designed in the shape of a colossal 24-wheeled stone chariot pulled by seven horses."
+            },
+            {
+                id: "OD-002",
+                state: "Odisha",
+                district: "Puri",
+                poName: "Puri HO",
+                pincode: "752001",
+                subject: "Lord Jagannath Temple & Rath Yatra Chariot",
+                category: "Spiritual & Pilgrimage",
+                introDate: "15.08.1975",
+                status: "Working",
+                motif: "Nandighosa chariot dome and temple Neelachakra wheel.",
+                details: "12th-century sacred temple dedicated to Lord Jagannath, famous worldwide for its annual Rath Yatra (Chariot Festival) attracting millions of devotees."
+            },
+
+            // ASSAM & NORTH EAST
+            {
+                id: "ASM-001",
+                state: "Assam",
+                district: "Golaghat",
+                poName: "Kaziranga NP SO",
+                pincode: "785609",
+                subject: "Great One-Horned Rhinoceros",
+                category: "Wildlife & Nature",
+                introDate: "01.02.1975",
+                status: "Working",
+                motif: "One-horned rhino grazing in elephant grass marshes.",
+                details: "Kaziranga National Park hosts two-thirds of the world's Great One-Horned Rhinoceros population along the floodplains of the Brahmaputra River."
+            },
+            {
+                id: "MEG-001",
+                state: "Meghalaya",
+                district: "East Khasi Hills",
+                poName: "Sohra SO (Cherrapunji)",
+                pincode: "793108",
+                subject: "Living Root Bridges & Nohkalikai Falls",
+                category: "Geography & Landmarks",
+                introDate: "15.06.2012",
+                status: "Working",
+                motif: "Double-decker bio-engineered Ficus root bridge over mountain stream.",
+                details: "Sohra (Cherrapunji) is famous for receiving some of the highest rainfall on Earth and for its living root bridges grown by Khasi tribes from rubber fig tree roots."
+            },
+
+            // ANDAMAN & NICOBAR
+            {
+                id: "AN-001",
+                state: "Andaman & Nicobar",
+                district: "South Andaman",
+                poName: "Port Blair HO",
+                pincode: "744101",
+                subject: "Cellular Jail National Memorial",
+                category: "Heritage & Monuments",
+                introDate: "10.03.2005",
+                status: "Working",
+                motif: "Central watchtower and radiating cell wings of Cellular Jail (Kala Pani).",
+                details: "Colonial prison used by the British to exile Indian freedom fighters. Constructed between 1896 and 1906, it stands today as a national memorial monument."
+            },
+
+            // PUNJAB & CHANDIGARH
+            {
+                id: "PB-001",
+                state: "Punjab",
+                district: "Amritsar",
+                poName: "Amritsar HO",
+                pincode: "143001",
+                subject: "Sri Harmandir Sahib (Golden Temple)",
+                category: "Spiritual & Pilgrimage",
+                introDate: "20.01.1982",
+                status: "Working",
+                motif: "Golden sanctum reflection in Amrit Sarovar lake waters.",
+                details: "The holiest Gurdwara of Sikhism, founded by Guru Ram Das in 1577. Its golden leaf foil superstructure was built by Maharaja Ranjit Singh in 1830."
+            },
+            {
+                id: "CH-001",
+                state: "Chandigarh",
+                district: "Chandigarh",
+                poName: "Chandigarh GPO",
+                pincode: "160017",
+                subject: "Open Hand Monument & Zakir Rose Garden",
+                category: "Heritage & Monuments",
+                introDate: "20.07.1991",
+                status: "Working",
+                motif: "Le Corbusier's Open Hand sculpture and Shivalik Hills backdrop.",
+                details: "Designed by architect Le Corbusier as a symbol of 'peace, reconciliation, and openness to give and receive', standing 26 meters high."
+            },
+
+            // UTTAR PRADESH & UTTARAKHAND
+            {
+                id: "UP-001",
+                state: "Uttar Pradesh",
+                district: "Varanasi",
+                poName: "Varanasi HO",
+                pincode: "221001",
+                subject: "Ganga Ghats & Evening Aarti",
+                category: "Spiritual & Pilgrimage",
+                introDate: "12.10.1980",
+                status: "Working",
+                motif: "River ghat steps, temples, and traditional river boats on the Ganges.",
+                details: "Varanasi (Kashi) is one of the world's oldest continuously inhabited cities, spiritual heart of Hinduism famed for ancient ghats along the sacred Ganges River."
+            },
+            {
+                id: "UK-001",
+                state: "Uttarakhand",
+                district: "Rudraprayag",
+                poName: "Kedarnath SO",
+                pincode: "246445",
+                subject: "Kedarnath Temple & Himalayan Peaks",
+                category: "Spiritual & Pilgrimage",
+                introDate: "05.05.2015",
+                status: "Working",
+                motif: "Stone Kedarnath Temple structure backed by snow-clad Kedarnath peak.",
+                details: "Located at 3,583 meters altitude near the Mandakini River, Kedarnath is one of the twelve Jyotirlingas of Lord Shiva and key part of Char Dham Yatra."
+            }
+        ];
+
+        // Global State Controller
+        let currentData = [...PPC_DATA];
+        let currentView = 'table'; // 'table' or 'card'
+        let currentFilterState = 'ALL';
+        let currentFilterCategory = 'ALL';
+        let currentSearchQuery = '';
+
+        // DOM Element Cache
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearch');
+        const stateFilter = document.getElementById('stateFilter');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const sortSelect = document.getElementById('sortSelect');
+        const tableViewBtn = document.getElementById('tableViewBtn');
+        const cardViewBtn = document.getElementById('cardViewBtn');
+        const tableViewSection = document.getElementById('tableViewSection');
+        const cardViewSection = document.getElementById('cardViewSection');
+        const tableBody = document.getElementById('tableBody');
+        const categoryBadgeContainer = document.getElementById('categoryBadgeContainer');
+        const showingCount = document.getElementById('showingCount');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        const exportCsvBtn = document.getElementById('exportCsvBtn');
+        const exportJsonBtn = document.getElementById('exportJsonBtn');
+        
+        // Modal Elements
+        const detailModal = document.getElementById('detailModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const closeModalBottomBtn = document.getElementById('closeModalBottomBtn');
+        const guideModal = document.getElementById('guideModal');
+        const openGuideBtn = document.getElementById('openGuideBtn');
+        const closeGuideBtn = document.getElementById('closeGuideBtn');
+        const closeGuideBottomBtn = document.getElementById('closeGuideBottomBtn');
+
+        // Initialize Application
+        function initApp() {
+            populateFilterDropdowns();
+            renderCategoryBadges();
+            updateStats();
+            applyFilters();
+
+            // Event Listeners
+            searchInput.addEventListener('input', handleSearchInput);
+            clearSearchBtn.addEventListener('click', clearSearch);
+            stateFilter.addEventListener('change', (e) => { currentFilterState = e.target.value; applyFilters(); });
+            categoryFilter.addEventListener('change', (e) => { currentFilterCategory = e.target.value; updateCategoryBadgesUI(); applyFilters(); });
+            sortSelect.addEventListener('change', applyFilters);
+            resetFiltersBtn.addEventListener('click', resetAllFilters);
+
+            tableViewBtn.addEventListener('click', () => switchView('table'));
+            cardViewBtn.addEventListener('click', () => switchView('card'));
+
+            exportCsvBtn.addEventListener('click', exportToCSV);
+            exportJsonBtn.addEventListener('click', exportToJSON);
+
+            openGuideBtn.addEventListener('click', () => guideModal.classList.remove('hidden'));
+            closeGuideBtn.addEventListener('click', () => guideModal.classList.add('hidden'));
+            closeGuideBottomBtn.addEventListener('click', () => guideModal.classList.add('hidden'));
+
+            closeModalBtn.addEventListener('click', () => detailModal.classList.add('hidden'));
+            closeModalBottomBtn.addEventListener('click', () => detailModal.classList.add('hidden'));
+            document.getElementById('copyDetailsBtn').addEventListener('click', copyModalDetailsToClipboard);
+        }
+
+        // Populate Dropdowns Dynamically
+        function populateFilterDropdowns() {
+            // States
+            const states = Array.from(new Set(PPC_DATA.map(item => item.state))).sort();
+            states.forEach(state => {
+                const opt = document.createElement('option');
+                opt.value = state;
+                opt.textContent = state;
+                stateFilter.appendChild(opt);
+            });
+
+            // Categories
+            const categories = Array.from(new Set(PPC_DATA.map(item => item.category))).sort();
+            categories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                categoryFilter.appendChild(opt);
+            });
+        }
+
+        // Render Quick Category Filter Badges
+        function renderCategoryBadges() {
+            const categories = ['ALL', ...Array.from(new Set(PPC_DATA.map(item => item.category))).sort()];
+            categoryBadgeContainer.innerHTML = '';
+
+            categories.forEach(cat => {
+                const badge = document.createElement('button');
+                badge.className = `px-3 py-1 rounded-full text-xs font-medium transition flex items-center gap-1.5 ${
+                    cat === currentFilterCategory 
+                    ? 'bg-red-600 text-white shadow-sm' 
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`;
+                badge.innerHTML = `${getCategoryIcon(cat)} <span>${cat === 'ALL' ? 'All Themes' : cat}</span>`;
+                badge.addEventListener('click', () => {
+                    currentFilterCategory = cat;
+                    categoryFilter.value = cat;
+                    updateCategoryBadgesUI();
+                    applyFilters();
+                });
+                categoryBadgeContainer.appendChild(badge);
+            });
+        }
+
+        function updateCategoryBadgesUI() {
+            renderCategoryBadges();
+        }
+
+        function getCategoryIcon(cat) {
+            switch(cat) {
+                case 'Heritage & Monuments': return '<i class="fa-solid fa-landmark"></i>';
+                case 'Wildlife & Nature': return '<i class="fa-solid fa-tree"></i>';
+                case 'Spiritual & Pilgrimage': return '<i class="fa-solid fa-gopuram"></i>';
+                case 'Culture & Folk Art': return '<i class="fa-solid fa-palette"></i>';
+                case 'Geography & Landmarks': return '<i class="fa-solid fa-mountain-sun"></i>';
+                case 'Leaders & Institutions': return '<i class="fa-solid fa-building-columns"></i>';
+                default: return '<i class="fa-solid fa-layer-group"></i>';
+            }
+        }
+
+        // Update Statistics Counters
+        function updateStats() {
+            document.getElementById('statTotal').textContent = PPC_DATA.length;
+            document.getElementById('statStates').textContent = new Set(PPC_DATA.map(i => i.state)).size;
+            document.getElementById('statCategories').textContent = new Set(PPC_DATA.map(i => i.category)).size;
+            document.getElementById('statActive').textContent = PPC_DATA.filter(i => i.status === 'Working').length;
+        }
+
+        // Search Input Handling
+        function handleSearchInput(e) {
+            currentSearchQuery = e.target.value.trim().toLowerCase();
+            if (currentSearchQuery.length > 0) {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+            applyFilters();
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            currentSearchQuery = '';
+            clearSearchBtn.classList.add('hidden');
+            applyFilters();
+        }
+
+        function resetAllFilters() {
+            searchInput.value = '';
+            currentSearchQuery = '';
+            clearSearchBtn.classList.add('hidden');
+            currentFilterState = 'ALL';
+            currentFilterCategory = 'ALL';
+            stateFilter.value = 'ALL';
+            categoryFilter.value = 'ALL';
+            sortSelect.value = 'state-asc';
+            updateCategoryBadgesUI();
+            applyFilters();
+        }
+
+        // Main Filter & Sort Pipeline
+        function applyFilters() {
+            let filtered = PPC_DATA.filter(item => {
+                // State Filter
+                if (currentFilterState !== 'ALL' && item.state !== currentFilterState) return false;
+                
+                // Category Filter
+                if (currentFilterCategory !== 'ALL' && item.category !== currentFilterCategory) return false;
+
+                // Search Query
+                if (currentSearchQuery !== '') {
+                    const haystack = `${item.state} ${item.district} ${item.poName} ${item.pincode} ${item.subject} ${item.category} ${item.motif} ${item.details}`.toLowerCase();
+                    if (!haystack.includes(currentSearchQuery)) return false;
+                }
+
+                return true;
+            });
+
+            // Sorting
+            const sortVal = sortSelect.value;
+            filtered.sort((a, b) => {
+                if (sortVal === 'state-asc') return a.state.localeCompare(b.state) || a.poName.localeCompare(b.poName);
+                if (sortVal === 'state-desc') return b.state.localeCompare(a.state);
+                if (sortVal === 'po-asc') return a.poName.localeCompare(b.poName);
+                if (sortVal === 'subject-asc') return a.subject.localeCompare(b.subject);
+                if (sortVal === 'date-desc') return (b.introDate || '').localeCompare(a.introDate || '');
+                return 0;
+            });
+
+            currentData = filtered;
+            showingCount.textContent = filtered.length;
+
+            renderTable();
+            renderCards();
+        }
+
+        // Switch View Modes
+        function switchView(mode) {
+            currentView = mode;
+            if (mode === 'table') {
+                tableViewSection.classList.remove('hidden');
+                cardViewSection.classList.add('hidden');
+                tableViewBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-800 bg-white shadow-sm flex items-center gap-1.5 transition';
+                cardViewBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition';
+            } else {
+                tableViewSection.classList.add('hidden');
+                cardViewSection.classList.remove('hidden');
+                cardViewBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-800 bg-white shadow-sm flex items-center gap-1.5 transition';
+                tableViewBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition';
+            }
+        }
+
+        // Render Table Rows
+        function renderTable() {
+            tableBody.innerHTML = '';
+            const noResults = document.getElementById('noResultsTable');
+
+            if (currentData.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            noResults.classList.add('hidden');
+
+            currentData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition border-b border-slate-100 group';
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-semibold text-slate-900 whitespace-nowrap">
+                        <span class="inline-block bg-slate-100 text-slate-800 px-2 py-0.5 rounded text-xs border border-slate-200 mr-1.5">${item.state}</span>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="font-bold text-slate-800">${item.poName}</div>
+                        <div class="text-xs font-mono text-slate-500">PIN: ${item.pincode}</div>
+                    </td>
+                    <td class="py-3 px-4 text-slate-600 text-xs font-medium">${item.district}</td>
+                    <td class="py-3 px-4">
+                        <div class="font-medium text-slate-900 line-clamp-1">${item.subject}</div>
+                        <div class="text-xs text-slate-500 line-clamp-1">${item.motif}</div>
+                    </td>
+                    <td class="py-3 px-4 whitespace-nowrap">
+                        <span class="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">
+                            ${getCategoryIcon(item.category)} ${item.category}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-xs font-mono text-slate-500 whitespace-nowrap">${item.introDate || 'N/A'}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">
+                        <span class="px-2 py-0.5 rounded text-xs font-bold ${item.status === 'Working' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            ${item.status}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center whitespace-nowrap">
+                        <button onclick="openDetailModal('${item.id}')" class="bg-red-50 hover:bg-red-600 text-red-700 hover:text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1 mx-auto">
+                            <i class="fa-solid fa-eye"></i> Details
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Render Visual Cards
+        function renderCards() {
+            cardViewSection.innerHTML = '';
+            const noResults = document.getElementById('noResultsCard');
+
+            if (currentData.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            noResults.classList.add('hidden');
+
+            currentData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition p-5 flex flex-col justify-between group';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start gap-2 mb-3">
+                            <span class="bg-red-50 text-red-700 border border-red-200 text-xs font-bold px-2.5 py-0.5 rounded-full">${item.state}</span>
+                            <span class="text-xs font-mono font-bold text-slate-400">PIN: ${item.pincode}</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base group-hover:text-red-600 transition leading-snug">${item.subject}</h3>
+                        <p class="text-xs font-semibold text-slate-500 mt-1 flex items-center gap-1">
+                            <i class="fa-solid fa-building-flag text-slate-400"></i> ${item.poName} (${item.district})
+                        </p>
+                        
+                        <div class="my-3 p-3 bg-amber-50/60 rounded-xl border border-amber-200/60 text-xs text-slate-600 line-clamp-3">
+                            <i class="fa-solid fa-stamp text-red-600 mr-1"></i> ${item.motif}
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between mt-2 text-xs">
+                        <span class="inline-flex items-center gap-1 text-slate-600 font-medium">
+                            ${getCategoryIcon(item.category)} ${item.category}
+                        </span>
+                        <button onclick="openDetailModal('${item.id}')" class="text-red-600 hover:text-red-800 font-bold flex items-center gap-1">
+                            View Profile <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                `;
+                cardViewSection.appendChild(card);
+            });
+        }
+
+        // Open Detail Modal
+        function openDetailModal(id) {
+            const item = PPC_DATA.find(i => i.id === id);
+            if (!item) return;
+
+            document.getElementById('modalStateBadge').textContent = item.state;
+            document.getElementById('modalCategoryBadge').textContent = item.category;
+            document.getElementById('modalSubject').textContent = item.subject;
+            document.getElementById('modalPostOffice').querySelector('span').textContent = `${item.poName}, District: ${item.district}, PIN: ${item.pincode}`;
+            
+            document.getElementById('modalStampPo').textContent = item.poName;
+            document.getElementById('modalStampDate').textContent = `INTRO: ${item.introDate}`;
+            document.getElementById('modalStampPincode').textContent = `PIN - ${item.pincode}`;
+
+            document.getElementById('modalMotifDesc').textContent = item.motif;
+            document.getElementById('modalIntroDate').textContent = item.introDate || 'N/A';
+            document.getElementById('modalStatus').textContent = item.status;
+            document.getElementById('modalDistrict').textContent = item.district;
+            document.getElementById('modalPincode').textContent = item.pincode;
+
+            document.getElementById('modalPlaceDetails').textContent = item.details;
+            document.getElementById('modalPostalAddress').textContent = `${item.poName}, ${item.district} District, ${item.state} - ${item.pincode}`;
+
+            detailModal.classList.remove('hidden');
+        }
+
+        // Copy Details
+        function copyModalDetailsToClipboard() {
+            const subject = document.getElementById('modalSubject').textContent;
+            const po = document.getElementById('modalPostOffice').textContent;
+            const details = document.getElementById('modalPlaceDetails').textContent;
+            const textToCopy = `Permanent Pictorial Cancellation: ${subject}\nLocation: ${po}\nDetails: ${details}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copyDetailsBtn');
+                btn.innerHTML = '<i class="fa-solid fa-check text-emerald-600"></i> Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Information';
+                }, 2000);
+            });
+        }
+
+        // CSV Exporter (Google Sheets & Excel Compatible UTF-8 with BOM)
+        function exportToCSV() {
+            const headers = ["State/UT", "District", "Post Office Name", "PIN Code", "Cancellation Subject", "Category", "Introduction Date", "Status", "Design Motif Description", "Place Heritage & Significance"];
+            
+            const rows = currentData.map(item => [
+                `"${item.state.replace(/"/g, '""')}"`,
+                `"${item.district.replace(/"/g, '""')}"`,
+                `"${item.poName.replace(/"/g, '""')}"`,
+                `"${item.pincode}"`,
+                `"${item.subject.replace(/"/g, '""')}"`,
+                `"${item.category.replace(/"/g, '""')}"`,
+                `"${item.introDate || ''}"`,
+                `"${item.status}"`,
+                `"${item.motif.replace(/"/g, '""')}"`,
+                `"${item.details.replace(/"/g, '""')}"`
+            ]);
+
+            const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Permanent_Pictorial_Cancellations_India_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // JSON Exporter
+        function exportToJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentData, null, 2));
+            const link = document.createElement("a");
+            link.setAttribute("href", dataStr);
+            link.setAttribute("download", `Permanent_Pictorial_Cancellations_India_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Run application on DOM load
+        window.onload = initApp;
+    </script>
+</body>
+</html>

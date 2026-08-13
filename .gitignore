@@ -36,3 +36,6 @@ yarn-error.log*
 # TypeScript build info
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+# pnpm store
+.pnpm-store/
