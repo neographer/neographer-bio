@@ -34,7 +34,8 @@ This workspace is a pnpm monorepo managed with Turborepo.
 - **Workspace Packages**:
   - `apps/hub` (mapped to `neographer.co.in`) — The central routing and landing page hub.
   - `apps/resume` (mapped to `resume.neographer.co.in`) — The professional ATS-friendly resume.
+  - `apps/collections` (mapped to `collections.neographer.co.in`) — Digital catalog of coins, banknotes, and philatelic resources.
   - Planned extensions: `apps/blog` (`blog.neographer.co.in`), `apps/gallery`, etc.
   - `packages/ui` — Shared workspace components.
 - **Dependency Control**: Keep package dependencies aligned across all app workspaces (e.g., same version of Next.js, React, and Lucide React).
-- **Edge redirects**: `apps/hub` serves as the primary router. Any domain-specific shortcut redirects (such as `/resume` -> `https://resume.neographer.co.in`) must be configured at the Next.js edge configuration level in `apps/hub/next.config.js`.
+- **Edge redirects**: `apps/hub` serves as the primary router. Any domain-specific shortcut redirects (such as `/resume` -> `https://resume.neographer.co.in` or `/collections` -> `https://collections.neographer.co.in`) must be configured at the Next.js edge configuration level in `apps/hub/next.config.js`.
