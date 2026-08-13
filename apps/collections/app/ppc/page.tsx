@@ -386,15 +386,15 @@ export default function PpcRegistry() {
             
             // TABLE VIEW
             <div className="flex-grow overflow-y-auto">
-              <table className="w-full text-left border-collapse">
+               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 text-[10px] font-mono text-slate-500 border-b border-slate-200 uppercase tracking-wider sticky top-0 z-10">
-                    <th className="py-2.5 px-4 font-semibold">State / UT</th>
+                  <tr className="bg-slate-50 text-[10px] font-mono text-slate-505 border-b border-slate-200 uppercase tracking-wider sticky top-0 z-10">
+                    <th className="py-2.5 px-4 font-semibold hidden sm:table-cell">State / UT</th>
                     <th className="py-2.5 px-4 font-semibold">Post Office Name</th>
                     <th className="py-2.5 px-4 font-semibold">Cancellation Subject</th>
-                    <th className="py-2.5 px-4 font-semibold">Category</th>
-                    <th className="py-2.5 px-4 font-semibold">Motif</th>
-                    <th className="py-2.5 px-4 font-semibold text-right">Intro Date</th>
+                    <th className="py-2.5 px-4 font-semibold hidden md:table-cell">Category</th>
+                    <th className="py-2.5 px-4 font-semibold hidden lg:table-cell">Motif</th>
+                    <th className="py-2.5 px-4 font-semibold text-right hidden sm:table-cell">Intro Date</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-xs">
@@ -404,19 +404,23 @@ export default function PpcRegistry() {
                       onClick={() => setSelectedItem(item)}
                       className="hover:bg-slate-50 cursor-pointer transition-colors"
                     >
-                      <td className="py-3 px-4 font-semibold text-slate-700 whitespace-nowrap">{item.state}</td>
+                      <td className="py-3 px-4 font-semibold text-slate-700 whitespace-nowrap hidden sm:table-cell">{item.state}</td>
                       <td className="py-3 px-4">
                         <div className="font-semibold text-slate-800">{item.poName}</div>
-                        <div className="text-[10px] text-slate-400 mt-0.5">{item.district} &middot; PIN {item.pincode}</div>
+                        <div className="text-[10px] text-slate-400 mt-0.5">
+                          {item.district} &middot; PIN {item.pincode}
+                          <span className="sm:hidden"> &middot; {item.state}</span>
+                          <span className="md:hidden"> &middot; {item.category}</span>
+                        </div>
                       </td>
                       <td className="py-3 px-4 font-semibold text-teal-700 max-w-[200px] truncate">{item.subject}</td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 hidden md:table-cell">
                         <span className="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded text-[10px] font-medium">
                           {item.category}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-slate-500 max-w-[280px] truncate">{item.motif}</td>
-                      <td className="py-3 px-4 font-mono text-slate-500 text-right whitespace-nowrap">{item.introDate}</td>
+                      <td className="py-3 px-4 text-slate-505 max-w-[280px] truncate hidden lg:table-cell">{item.motif}</td>
+                      <td className="py-3 px-4 font-mono text-slate-505 text-right whitespace-nowrap hidden sm:table-cell">{item.introDate}</td>
                     </tr>
                   ))}
                 </tbody>

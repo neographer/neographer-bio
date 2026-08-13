@@ -57,7 +57,7 @@ const BackgroundGraphics = () => {
       </div>
 
       {/* 4. Strategic Low-Opacity Motif Icons (Tech & Personal Interests) in non-text margins */}
-      <div className="absolute inset-0 text-slate-300/40 dark:text-zinc-800/35 transition-colors duration-500">
+      <div className="hidden md:block absolute inset-0 text-slate-300/40 dark:text-zinc-800/35 transition-colors duration-500">
         {/* Tech / Left Column Margin */}
         <div className="absolute left-[3.5%] top-[45%]">
           <Cpu size={30} strokeWidth={1} className="opacity-75 dark:opacity-55" />

@@ -157,7 +157,7 @@ export default function CollectionsDashboard() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen max-h-screen flex flex-col bg-slate-50 text-slate-900 overflow-hidden font-sans">
+    <div className="min-h-screen lg:max-h-screen flex flex-col bg-slate-50 text-slate-900 lg:overflow-hidden font-sans">
       
       {/* 1. Header Section */}
       <header className="flex-none bg-white border-b border-slate-200 py-3 px-6 shadow-sm">
@@ -167,21 +167,20 @@ export default function CollectionsDashboard() {
               <span className="w-7 h-7 rounded-full border border-teal-500 bg-teal-50 flex items-center justify-center text-xs text-teal-600 font-mono font-bold group-hover:bg-teal-600 group-hover:text-white transition-all duration-300">N</span>
               <span className="tracking-tight group-hover:text-teal-600 transition-colors">neographer</span>
             </a>
-            <span className="text-slate-300">|</span>
-            <h1 className="text-sm font-semibold text-slate-500 uppercase tracking-widest font-mono">
+            <span className="text-slate-300 hidden sm:inline">|</span>
+            <h1 className="text-sm font-semibold text-slate-500 uppercase tracking-widest font-mono hidden sm:inline-block">
               [COLLECTIONS & ARCHIVES]
             </h1>
           </div>
-          <div className="text-[11px] font-mono text-slate-405 bg-slate-150 py-1 px-2.5 rounded-md border border-slate-200">
+          <div className="text-[11px] font-mono text-slate-405 bg-slate-150 py-1 px-2.5 rounded-md border border-slate-200 hidden xs:block">
             host: collections.neographer.co.in
           </div>
         </div>
       </header>
 
-      {/* 2. Navigation Tabs Bar */}
-      <nav className="flex-none bg-white border-b border-slate-200 px-6 py-2 shadow-xs">
+      <nav className="flex-none bg-white border-b border-slate-200 px-4 py-2 shadow-xs overflow-x-auto no-scrollbar">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex gap-1">
+          <div className="flex gap-1 flex-nowrap">
             <button
               onClick={() => setActiveTab("dashboard")}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-medium tracking-tight transition-all flex items-center gap-1.5 ${
@@ -250,8 +249,7 @@ export default function CollectionsDashboard() {
         </div>
       </nav>
 
-      {/* 3. Content Area */}
-      <main className="flex-grow overflow-hidden max-w-7xl mx-auto w-full p-4 lg:p-6 flex flex-col justify-stretch">
+      <main className="flex-grow overflow-y-auto lg:overflow-hidden max-w-7xl mx-auto w-full p-3 lg:p-6 flex flex-col justify-stretch">
         
         {/* DASHBOARD TAB - FITS SCREEN STRICTLY */}
         {activeTab === "dashboard" && (
